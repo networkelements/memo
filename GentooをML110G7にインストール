@@ -747,5 +747,7 @@ udev           devtmpfs   10M  4.0K   10M   1% /dev
 tmpfs          tmpfs     4.9G  304K  4.9G   1% /run
 shm            tmpfs     4.9G     0  4.9G   0% /dev/shm
 cgroup_root    tmpfs      10M     0   10M   0% /sys/fs/cgroup
+ML110G7(Gentoo)% mount | grep /dev/sd
+/dev/sda5 on / type ext4 (rw,noatime,data=ordered)
 ML110G7(Gentoo)% ls /dev/sd*
 /dev/sda  /dev/sda1  /dev/sda2  /dev/sda5  /dev/sda6
