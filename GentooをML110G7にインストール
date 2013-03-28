@@ -1,0 +1,751 @@
+USBメモリにUbuntuServerを入れて、ssh越しでインストールしてみた
+ちょっとした問題点
+・btrfs使えてないっぽい？
+・make menuconfigでエラーが出るので不安
+・キー入力がなんか変
+
+●作業ログ
+ubuntuserverにログインして
+blue@ML110G7:~# sudo -i
+root@ML110G7:~# tmux
+
+root@ML110G7:~# parted /dev/sda
+GNU Parted 2.3
+/dev/sda を使用
+GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力してください。
+(parted) print                                                            
+モデル: ATA VB0250EAVER (scsi)
+ディスク /dev/sda: 250GB
+セクタサイズ (論理/物理): 512B/512B
+パーティションテーブル: msdos
+
+番号  開始    終了    サイズ  タイプ    ファイルシステム  フラグ
+ 1    1049kB  1050MB  1049MB  primary   ext2
+ 2    1050MB  250GB   249GB   extended
+ 5    1051MB  22.0GB  21.0GB  logical   ext4
+ 6    22.0GB  250GB   228GB   logical   btrfs
+
+(parted) q
+
+root@ML110G7:~# mkdir /mnt/gentoo
+root@ML110G7:~# mount -t ext4 /dev/sda5 /mnt/gentoo/
+root@ML110G7:~# mkdir /mnt/gentoo/boot
+root@ML110G7:~# mount -t ext2 /dev/sda1 /mnt/gentoo/boot
+root@ML110G7:~# mkdir -p /mnt/home
+root@ML110G7:~# mount -t btrfs /dev/sda6 /mnt/home
+
+root@ML110G7:~# cd /mnt/gentoo/
+
+root@ML110G7:/mnt/gentoo# wget http://gentoo.channelx.biz/releases/amd64/current-stage3/default/20130321/stage3-amd64-20130321.tar.bz2
+root@ML110G7:/mnt/gentoo# tar xvjpf stage3-*.tar.bz2
+
+root@ML110G7:/mnt/gentoo# wget http://gentoo.channelx.biz/snapshots/portage-latest.tar.bz2
+root@ML110G7:/mnt/gentoo# tar xvjf portage-latest.tar.bz2 -C /mnt/gentoo/usr
+
+root@ML110G7:/mnt/gentoo# rm stage3-*.tar.bz2*
+root@ML110G7:/mnt/gentoo# rm portage-latest.tar.bz2*
+root@ML110G7:/mnt/gentoo# ls
+bin   dev  home  lib32  lost+found  mnt  proc  run   sys  usr
+boot  etc  lib   lib64  media       opt  root  sbin  tmp  var
+
+root@ML110G7:/mnt/gentoo# nano -w /mnt/gentoo/etc/make.conf
+# These settings were set by the catalyst build script that automatically
+# built this stage.
+# Please consult /usr/share/portage/config/make.conf.example for a more
+# detailed example.
+
+CFLAGS="-O3 -pipe -march=core2 -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mmmx -fomit-frame-pointer"
+
+CXXFLAGS="${CFLAGS}"
+
+# WARNING: Changing your CHOST is not something that should be done lightly.
+# Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
+
+CHOST="x86_64-pc-linux-gnu"
+
+# These are the USE flags that were used in addition to what is provided by the
+# profile used for building.
+
+USE="bindist mmx sse sse2 ssse3 zsh-completion btrfs-progs btrfs ramfs acpi"
+#hardened ramfs mkinitcpio busybox cpio grub mount hddtemp zlib lzo curl acpi busybox
+
+MAKEOPTS="-j3"
+
+GENTOO_MIRRORS="http://gentoo.channelx.biz/ ftp://ftp.iij.ad.jp/pub/linux/gentoo/ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/ rsync://ftp.jaist.ac.jp/pub/Linux"
+
+SYNC="rsync://rsync5.jp.gentoo.org/gentoo-portage"
+
+
+root@ML110G7:/# mount -t proc none /mnt/gentoo/proc
+root@ML110G7:/# mount --rbind /dev /mnt/gentoo/dev
+root@ML110G7:/# mount --rbind /sys /mnt/gentoo/sys
+root@ML110G7:/# cp -L /etc/resolv.conf /mnt/gentoo/etc
+
+root@ML110:/mnt/gentoo# chroot /mnt/gentoo /bin/bash
+
+ML110G7 / # env-update && source /etc/profile
+!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
+>>> Regenerating /etc/ld.so.cache...
+ML110G7 / # export PS1="(chroot) $PS1"
+(chroot) 
+
+(chroot) ML110G7 / # time emerge --sync
+!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
+>>> Starting rsync with rsync://203.178.137.175/gentoo-portage...
+>>> Checking server timestamp ...
+
+receiving incremental file list
+timestamp.chk
+
+Number of files: 1
+Number of files transferred: 1
+Total file size: 32 bytes
+Total transferred file size: 32 bytes
+Literal data: 32 bytes
+Matched data: 0 bytes
+File list size: 27
+File list generation time: 0.001 seconds
+File list transfer time: 0.000 seconds
+Total bytes sent: 98
+Total bytes received: 135
+
+sent 98 bytes  received 135 bytes  155.33 bytes/sec
+total size is 32  speedup is 0.14
+
+>>>
+>>> Timestamps on the server and in the local repository are the same.
+>>> Cancelling all further sync action. You are already up to date.
+>>>
+>>> In order to force sync, remove '/usr/portage/metadata/timestamp.chk'.
+>>>
+
+real    0m0.836s
+user    0m0.364s
+sys     0m0.040s
+
+ML110G7 / # eselect news read new
+
+ML110G7 / # eselect profile list
+Available profile symlink targets:
+  [1]   default/linux/amd64/13.0
+  [2]   default/linux/amd64/13.0/selinux
+  [3]   default/linux/amd64/13.0/desktop
+  [4]   default/linux/amd64/13.0/desktop/gnome
+  [5]   default/linux/amd64/13.0/desktop/kde
+  [6]   default/linux/amd64/13.0/developer
+  [7]   default/linux/amd64/13.0/no-multilib
+  [8]   default/linux/amd64/13.0/x32
+  [9]   hardened/linux/amd64
+  [10]  hardened/linux/amd64/selinux
+  [11]  hardened/linux/amd64/no-multilib
+  [12]  hardened/linux/amd64/no-multilib/selinux
+  [13]  hardened/linux/uclibc/amd64
+
+ML110G7 / # eselect profile set 1
+
+ML110G7 / # eselect profile list
+Available profile symlink targets:
+  [1]   default/linux/amd64/13.0 *
+  [2]   default/linux/amd64/13.0/selinux 
+  [3]   default/linux/amd64/13.0/desktop
+  [4]   default/linux/amd64/13.0/desktop/gnome
+  [5]   default/linux/amd64/13.0/desktop/kde
+  [6]   default/linux/amd64/13.0/developer
+  [7]   default/linux/amd64/13.0/no-multilib
+  [8]   default/linux/amd64/13.0/x32
+  [9]   hardened/linux/amd64
+  [10]  hardened/linux/amd64/selinux
+  [11]  hardened/linux/amd64/no-multilib
+  [12]  hardened/linux/amd64/no-multilib/selinux
+  [13]  hardened/linux/uclibc/amd64
+
+ML110G7 / # nano -w /etc/locale.gen
+# /etc/locale.gen: list all of the locales you want to have on your system
+#
+# The format of each line:
+# <locale> <charmap>
+#
+# Where <locale> is a locale located in /usr/share/i18n/locales/ and
+# where <charmap> is a charmap located in /usr/share/i18n/charmaps/.
+#
+# All blank lines and lines starting with # are ignored.
+#
+# For the default list of supported combinations, see the file:
+# /usr/share/i18n/SUPPORTED
+#
+# Whenever glibc is emerged, the locales listed here will be automatically
+# rebuilt for you.  After updating this file, you can simply run `locale-gen`
+# yourself instead of re-emerging glibc.
+
+#en_US ISO-8859-1
+en_US.UTF-8 UTF-8
+#ja_JP.EUC-JP EUC-JP
+ja_JP.UTF-8 UTF-8
+#ja_JP EUC-JP
+#en_HK ISO-8859-1
+#en_PH ISO-8859-1
+#de_DE ISO-8859-1
+#de_DE@euro ISO-8859-15
+#es_MX ISO-8859-1
+#fa_IR UTF-8
+#fr_FR ISO-8859-1
+#fr_FR@euro ISO-8859-15
+#it_IT ISO-8859-1
+
+ML110G7 / # locale-gen
+ * Generating 2 locales (this might take a while) with 1 jobs
+ *  (1/2) Generating en_US.UTF-8 ... [ ok ]
+ *  (2/2) Generating ja_JP.UTF-8 ... [ ok ]
+ * Generation complete
+
+ML110G7 / # ls /usr/share/zoneinfo
+Africa      CST6CDT  Etc      Greenwich  Kwajalein  Navajo     Turkey       localtime
+America     Canada   Europe   HST        Libya      PRC        UCT          posix
+Antarctica  Chile    Factory  Hongkong   MET        PST8PDT    US           posixrules
+Arctic      Cuba     GB       Iceland    MST        Pacific    UTC          right
+Asia        EET      GB-Eire  Indian     MST7MDT    Poland     Universal    zone.tab
+Atlantic    EST      GMT      Iran       Mexico     Portugal   W-SU
+Australia   EST5EDT  GMT+0    Israel     Mideast    ROC        WET
+Brazil      Egypt    GMT-0    Jamaica    NZ         ROK        Zulu
+CET         Eire     GMT0     Japan      NZ-CHAT    Singapore  iso3166.tab
+
+ML110G7 / # cp /usr/share/zoneinfo/Japan /etc/localtime
+ML110G7 / # echo "Asia/Tokyo" > /etc/timezone
+ML110G7 / # cat /etc/timezone
+echo Asia/Tokyo
+
+//linux-headers linux-firmware入れてるせいでおかしくなる？？？？
+ML110G7 / # time emerge -av linux-headers linux-firmware gentoo-sources
+!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
+
+ * IMPORTANT: 4 news items need reading for repository 'gentoo'.
+ * Use eselect news to read news items.
+
+These are the packages that would be merged, in order:
+
+Calculating dependencies... done!
+[ebuild  N     ] sys-kernel/linux-firmware-20120924  USE="-savedconfig" 15,997 kB
+[ebuild  N     ] sys-devel/bc-1.06.95  USE="readline -libedit -static" 284 kB
+[ebuild     U  ] sys-kernel/linux-headers-3.7 [3.6] 5,201 kB
+[ebuild  N     ] sys-kernel/gentoo-sources-3.7.10:3.7.10  USE="-build -deblob -symlink" 68,335
+ kB
+Total: 4 packages (1 upgrade, 3 new), Size of downloads: 89,815 kB
+
+Would you like to merge these packages? [Yes/No] yes
+ * Messages for package sys-kernel/gentoo-sources-3.7.10:
+
+ * If you are upgrading from a previous kernel, you may be interested
+ * in the following document:
+ *   - General upgrade guide: http://www.gentoo.org/doc/en/kernel-upgrade.xml
+>>> Auto-cleaning packages...
+
+>>> No outdated packages were found on your system.
+
+ * Regenerating GNU info directory index...
+ * Processed 76 info files.
+
+ * IMPORTANT: 4 news items need reading for repository 'gentoo'.
+ * Use eselect news to read news items.
+
+real    2m24.507s
+user    1m8.236s
+sys     0m21.237s
+
+
+ML110G7 linux # echo CONFIG_NETFILTER_ADVANCED=y >> /usr/src/linux/.config
+ML110G7 linux # echo CONFIG_NETFILTER_XT_MATCH_PHYSDEV=y >> /usr/src/linux/.config
+ML110G7 linux # cd /usr/src/linux
+
+ML110G7 linux # make localyesconfig
+  HOSTCC  scripts/basic/fixdep
+  HOSTCC  scripts/kconfig/conf.o
+  SHIPPED scripts/kconfig/zconf.tab.c
+  SHIPPED scripts/kconfig/zconf.lex.c
+  SHIPPED scripts/kconfig/zconf.hash.c
+  HOSTCC  scripts/kconfig/zconf.tab.o
+  HOSTLD  scripts/kconfig/conf
+using config: '.config'
+WARNING: NF_DEFRAG_IPV6 is required, but nothing in the
+  current config selects it.
+WARNING: LLC is required, but nothing in the
+  current config selects it.
+WARNING: NF_CONNTRACK_BROADCAST is required, but nothing in the
+  current config selects it.
+WARNING: STP is required, but nothing in the
+  current config selects it.
+WARNING: NF_NAT is required, but nothing in the
+  current config selects it.
+WARNING: ZLIB_DEFLATE is required, but nothing in the
+  current config selects it.
+WARNING: NF_DEFRAG_IPV4 is required, but nothing in the
+  current config selects it.
+module xt_addrtype did not have configs CONFIG_NETFILTER_XT_MATCH_ADDRTYPE
+module xt_tcpudp did not have configs CONFIG_NETFILTER_XTABLES
+module nf_conntrack_broadcast did not have configs CONFIG_NF_CONNTRACK_BROADCAST
+module libcrc32c did not have configs CONFIG_LIBCRC32C
+module xt_limit did not have configs CONFIG_NETFILTER_XT_MATCH_LIMIT
+module hpwdt did not have configs CONFIG_HP_WATCHDOG
+module ebtable_nat did not have configs CONFIG_BRIDGE_EBT_T_NAT
+module lp did not have configs CONFIG_PRINTER
+module xt_multiport did not have configs CONFIG_NETFILTER_XT_MATCH_MULTIPORT
+module xt_LOG did not have configs CONFIG_NETFILTER_XT_TARGET_LOG
+module zlib_deflate did not have configs CONFIG_ZLIB_DEFLATE
+module serio_raw did not have configs CONFIG_SERIO_RAW
+module xt_CHECKSUM did not have configs CONFIG_NETFILTER_XT_TARGET_CHECKSUM
+module nf_defrag_ipv6 did not have configs CONFIG_NF_CONNTRACK_IPV6 CONFIG_NF_DEFRAG_IPV6
+module iptable_filter did not have configs CONFIG_IP_NF_FILTER
+module llc did not have configs CONFIG_LLC
+module iptable_mangle did not have configs CONFIG_IP_NF_MANGLE
+module xt_hl did not have configs CONFIG_NETFILTER_XT_MATCH_HL
+module lpc_ich did not have configs CONFIG_LPC_ICH
+module ip6table_filter did not have configs CONFIG_IP6_NF_FILTER
+module hid did not have configs CONFIG_HID
+module uas did not have configs CONFIG_USB_UAS
+module nf_nat did not have configs CONFIG_NF_NAT
+module nf_conntrack_netbios_ns did not have configs CONFIG_NF_CONNTRACK_NETBIOS_NS
+module ghash_clmulni_intel did not have configs CONFIG_CRYPTO_GHASH_CLMUL_NI_INTEL
+module usbhid did not have configs CONFIG_USB_HID
+module ip_tables did not have configs CONFIG_IP_NF_IPTABLES
+module microcode did not have configs CONFIG_MICROCODE
+module stp did not have configs CONFIG_STP
+module nf_conntrack_ftp did not have configs CONFIG_NF_CONNTRACK_FTP
+module xfs did not have configs CONFIG_XFS_FS
+module parport did not have configs CONFIG_PARPORT
+module ipt_REJECT did not have configs CONFIG_IP_NF_TARGET_REJECT
+module e1000e did not have configs CONFIG_E1000E
+module ip6_tables did not have configs CONFIG_IP6_NF_IPTABLES
+module vesafb did not have configs CONFIG_FB_VESA
+module joydev did not have configs CONFIG_INPUT_JOYDEV
+module coretemp did not have configs CONFIG_SENSORS_CORETEMP
+module nf_defrag_ipv4 did not have configs CONFIG_NF_DEFRAG_IPV4
+module nf_conntrack_ipv4 did not have configs CONFIG_NF_CONNTRACK_IPV4
+module kvm did not have configs CONFIG_KVM_GUEST CONFIG_KVM_440 CONFIG_KVM_E500V2 CONFIG_KVM_E500MC CONF
+IG_KVM_BOOK3S_64 CONFIG_KVM_BOOK3S_32 CONFIG_KVM_GUEST CONFIG_KVM CONFIG_KVM CONFIG_KVM
+module ipt_MASQUERADE did not have configs CONFIG_IP_NF_TARGET_MASQUERADE
+module nf_nat_ftp did not have configs CONFIG_NF_NAT_FTP
+module ebtables did not have configs CONFIG_BRIDGE_NF_EBTABLES
+module kvm_intel did not have configs CONFIG_KVM_INTEL CONFIG_KVM_INTEL
+module nf_conntrack_ipv6 did not have configs CONFIG_NF_CONNTRACK_IPV6
+module btrfs did not have configs CONFIG_BTRFS_FS
+module gpio_ich did not have configs CONFIG_GPIO_ICH
+module usb_storage did not have configs CONFIG_USB_STORAGE
+module cryptd did not have configs CONFIG_CRYPTO_CRYPTD
+module ext2 did not have configs CONFIG_EXT2_FS
+module ip6t_rt did not have configs CONFIG_IP6_NF_MATCH_RT
+module psmouse did not have configs CONFIG_MOUSE_PS2
+module mac_hid did not have configs CONFIG_MAC_EMUMOUSEBTN
+module bridge did not have configs CONFIG_BRIDGE
+module hpilo did not have configs CONFIG_HP_ILO
+module hid_generic did not have configs CONFIG_HID_GENERIC
+module xt_state did not have configs CONFIG_NETFILTER_XT_MATCH_STATE
+module iptable_nat did not have configs CONFIG_NF_NAT_IPV4
+module xt_comment did not have configs CONFIG_NETFILTER_XT_MATCH_COMMENT
+module x_tables did not have configs CONFIG_NETFILTER_XTABLES
+module nf_conntrack did not have configs CONFIG_NF_CONNTRACK
+
+//なんかFileSystemにbtrfs出て来なくなった死にたい
+ML110G7 linux # make menuconfig
+File Systems  --->
+[*] Second extended fs support 
+[*]   Ext2 extended attributes
+[*]     Ext2 POSIX Access Control Lists
+[*]     Ext2 Security Labels
+[*]   Ext2 execute in place support
+[ ] Ext3 journalling file system support
+[*] The Extended 4 (ext4) filesystem
+[*]   Use ext4 for ext2/ext3 file systems (NEW)
+[*]   Ext4 extended attributes (NEW)
+[*]     Ext4 POSIX Access Control Lists
+[*]     Ext4 Security Labels
+[ ]   EXT4 debugging support (NEW)
+[ ] Reiserfs support
+[ ] JFS filesystem support
+[ ] XFS filesystem support
+[ ] GFS2 file system support
+[*] Dnotify support
+[*] Inotify support for userspace
+[ ] Filesystem wide access notification
+[ ] Quota support
+[ ] Kernel automounter version 4 support (also supports v3)
+[ ] FUSE (Filesystem in Userspace) support
+Caches  --->
+CD-ROM/DVD Filesystems  --->
+DOS/FAT/NT Filesystems  --->
+  Pseudo filesystems  --->
+  [*] Miscellaneous filesystems  --->
+  -*- Native language support  --->[*]   Japanese charsets (Shift-JIS, EUC-JP)
+  
+-*- Cryptographic API  --->
+[*]   SHA224 and SHA256 digest algorithm
+[*]   SHA384 and SHA512 digest algorithms
+  *** Ciphers ***
+ -*-   AES cipher algorithms
+[*]   AES cipher algorithms (x86_64)
+
+[*] Virtualization  --->
+
+
+General setup  --->
+[*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
+()    Initramfs source file(s) (NEW)
+
+[*] Configure standard kernel features (expert users)  --->
+//なぜか上部に出てくる
+[*]   Support initial ramdisks compressed using gzip (NEW)
+[ ]   Support initial ramdisks compressed using bzip2
+[ ]   Support initial ramdisks compressed using LZMA
+[ ]   Support initial ramdisks compressed using XZ
+[*]   Support initial ramdisks compressed using LZO
+[*] Optimize for size
+
+Processor type and features  --->
+[*] Symmetric multi-processing support (NEW)
+[*] Paravirtualized guest support  --->
+[ ]   Paravirtual steal time accounting (NEW)                                                                                          │ │   
+[*]   Xen guest support
+[*]   KVM Guest support (including kvmclock) (NEW) 
+-*-   Enable paravirtualization code
+
+[*] Memtest
+[*] SMT (Hyperthreading) scheduler support
+[*] Enable KSM for page merging
+[*] Enable recovery from hardware memory errors
+
+Power management and ACPI options  --->
+[*] ACPI (Advanced Configuration and Power Interface) Support  ---> 
+   <*>   Processor
+　    <*>     Thermal Zone 
+ 
+CPU Frequency scaling  --->
+ Default CPUFreq governor (ondemand)  --->  
+[*] CPU Frequency scaling
+<*>   CPU frequency translation statistics (NEW)
+[ ]     CPU frequency translation statistics details (NEW)
+Default CPUFreq governor (performance)  --->
+-*-   'performance' governor
+<M>   'powersave' governor
+<M>   'userspace' governor for userspace frequency scaling
+<*>   'ondemand' cpufreq policy governor
+<*>   'conservative' cpufreq governor 
+
+[*] Networking support  --->
+  Networking options  --->
+    <*> 802.1d Ethernet Bridging
+    <*> 802.1Q VLAN Supported
+
+Device Drivers  --->
+ Generic Driver Options  ---> 
+[*] Maintain a devtmpfs filesystem to mount at /dev
+[*]   Automount devtmpfs at /dev, after the kernel mounted the rootfs  
+
+ --- Multiple devices driver support (RAID and LVM)
+-*-   RAID support
+[*]     Autodetect RAID arrays during kernel boot (NEW)
+[ ]     Linear (append) mode (NEW)
+[ ]     RAID-0 (striping) mode (NEW)
+-*-     RAID-1 (mirroring) mode
+-*-     RAID-10 (mirrored striping) mode
+-*-     RAID-4/RAID-5/RAID-6 mode
+[ ]     Multipath I/O support (NEW)
+[ ]     Faulty test module for MD (NEW)
+[*]   Device mapper support
+[ ]     Device mapper debugging support (NEW)
+[*]     Crypt target support
+[*]     Snapshot target
+[*]     Mirror target
+[*]     RAID 1/4/5/6/10 target
+[*]   Zero target (NEW)
+[ ]   Multipath target (NEW)
+[ ]   DM uevents (NEW) 
+
+Input device support  --->
+[*]   Mice (NEW)  --->[*]   Synaptics USB device support
+
+Device Drivers ---> Graphics support  --->  [*] Support for frame buffer devices  --->
+ [*]   Matrox acceleration
+ [ ]     Millennium I/II support (NEW)
+ [ ]     Mystique support (NEW)
+ [*]     G100/G200/G400/G450/G550 support
+
+
+ML110G7 linux # time make && make modules_install
+Setup is 15532 bytes (padded to 15872 bytes).
+System is 2276 kB
+CRC e9fa4433
+Kernel: arch/x86/boot/bzImage is ready  (#1)
+
+real    5m20.913s
+user    4m37.325s
+sys     0m22.477s
+
+The present kernel configuration has modules disabled.
+Type 'make config' and enable loadable module support.
+Then build a kernel with module support enabled.
+
+make: *** [modules_install] エラー 1
+
+
+ML110G7 linux # cp /usr/src/linux/arch/x86_64/boot/bzImage /boot/kernel
+
+//これをそのままコピペしてやられた　絶対にしない
+//ML110G7 linux # cp arch/x86_64/boot/bzImage /boot/kernel-2.6.34-gentoo-r1
+
+ML110G7 linux # time emerge genkernel
+ML110G7 linux # time genkernel all
+* Gentoo Linux Genkernel; Version 3.4.45
+* Running with options: all
+
+* Using genkernel.conf from /etc/genkernel.conf
+* Sourcing arch-specific config.sh from /usr/share/genkernel/arch/x86_64/config.sh ..
+* Sourcing arch-specific modules_load from /usr/share/genkernel/arch/x86_64/modules_load ..
+
+* Linux Kernel 3.7.10-gentoo for x86_64...
+* .. with config file /usr/share/genkernel/arch/x86_64/kernel-config
+* kernel: Using config from /usr/share/genkernel/arch/x86_64/kernel-config
+*         Previous config backed up to .config--2013-03-28--19-09-30.bak
+* kernel: >> Running mrproper...
+*         >> Running oldconfig...
+* kernel: >> Cleaning...
+*         >> Compiling 3.7.10-gentoo bzImage...
+*         >> Not installing firmware as it's included in the kernel already (CONFIG_FIRMWARE_IN_KERNEL=y)...
+*         >> Compiling 3.7.10-gentoo modules...
+*         >> Generating module dependency data...
+* Copying config for successful build to /etc/kernels/kernel-config-x86_64-3.7.10-gentoo
+* busybox: >> Applying patches...
+*           - 1.18.1-openvt.diff
+*           - busybox-1.20.1-mdstart.patch
+*           - busybox-1.20.2-glibc-sys-resource.patch
+*           - busybox-1.7.4-signal-hack.patch
+* busybox: >> Configuring...
+* busybox: >> Compiling...
+* busybox: >> Copying to cache...
+* initramfs: >> Initializing...
+*         >> Appending base_layout cpio data...
+*         >> Appending auxilary cpio data...
+*         >> Copying keymaps
+*         >> Appending busybox cpio data...
+*         >> Appending modules cpio data...
+*         >> Appending blkid cpio data...
+*         >> Appending modprobed cpio data...
+*         >> Compressing cpio data (.xz)...
+* 
+* Kernel compiled successfully!
+* 
+* Required Kernel Parameters:
+*     root=/dev/$ROOT
+* 
+*     Where $ROOT is the device node for your root partition as the
+*     one specified in /etc/fstab
+* 
+* If you require Genkernel's hardware detection features; you MUST
+* tell your bootloader to use the provided INITRAMFS file.
+
+* WARNING... WARNING... WARNING...
+* Additional kernel cmdline arguments that *may* be required to boot properly...
+* With support for several ext* filesystems available, it may be needed to
+* add "rootfstype=ext3" or "rootfstype=ext4" to the list of boot parameters.
+
+* Do NOT report kernel bugs as genkernel bugs unless your bug
+* is about the default genkernel configuration...
+* 
+* Make sure you have the latest ~arch genkernel before reporting bugs.
+
+real    15m49.552s
+user    25m54.737s
+sys     2m3.040s
+
+//あとでGRUB設定するときに確認する
+ML110G7 linux # ls /boot/kernel* /boot/initramfs*
+/boot/initramfs-genkernel-x86_64-3.7.10-gentoo  /boot/kernel  /boot/kernel-genkernel-x86_64-3.7.10-gentoo
+
+ML110G7 linux # nano /etc/fstab
+# /etc/fstab: static file system information.
+#
+# noatime turns off atimes for increased performance (atimes normally aren't
+# needed); notail increases performance of ReiserFS (at the expense of storage
+# efficiency).  It's safe to drop the noatime options if you want and to
+# switch between notail / tail freely.
+#
+# The root filesystem should have a pass number of either 0 or 1.
+# All other filesystems should have a pass number of 0 or greater than 1.
+#
+# See the manpage fstab(5) for more information.
+#
+
+# <fs>                  <mountpoint>    <type>          <opts>          <dump/pass>
+
+# NOTE: If your BOOT partition is ReiserFS, add the notail option to opts.
+/dev/sda1               /boot           ext2            noauto,noatime  1 2
+/dev/sda5               /               ext4            noatime         0 1
+/dev/sda6               /home           btrfs           noatime,autodefrag,space_cache,inode_cache,compress=lzo         0 0
+/dev/cdrom              /mnt/cdrom      auto            noauto,ro       0 0
+/dev/fd0                /mnt/floppy     auto            noauto          0 0
+
+
+ML110G7 linux # nano -w /etc/conf.d/hostname
+# Set to the hostname of this machine
+hostname="ML110G7(Gentoo)"
+
+ML110G7 linux # emerge -av sudo
+Total: 15 packages (14 new, 1 in new slot), Size of downloads: 19,945 kB
+
+!!! The following update(s) have been skipped due to unsatisfied dependencies
+!!! triggered by backtracking:
+
+app-admin/setools:0
+
+The following USE changes are necessary to proceed:
+ (see "package.use" in the portage(5) man page for more details)
+# required by dev-python/sepolgen-1.1.8
+# required by sys-apps/policycoreutils-2.1.13-r5
+# required by sec-policy/selinux-sudo-2.20120725-r11
+# required by app-admin/sudo-1.8.6_p3
+# required by sudo (argument)
+=app-admin/setools-3.3.7-r3 python
+
+Use --autounmask-write to write changes to config files (honoring
+CONFIG_PROTECT). Carefully examine the list of proposed changes,
+paying special attention to mask or keyword changes that may expose
+experimental or unstable packages.
+
+ML110G7 linux # emerge -av iptables zsh vim metalog pciutils syslog-ng fcron dhcpcd
+
+ML110G7 linux # rc-update add dhcpcd default
+ * service dhcpcd added to runlevel default
+(chroot) ML110G7 linux # rc-update add syslog-ng default
+ * service syslog-ng added to runlevel default
+(chroot) ML110G7 linux # rc-update add fcron default
+ * service fcron added to runlevel default
+(chroot) ML110G7 linux # rc-update add metalog default
+ * service metalog added to runlevel default
+(chroot) ML110G7 linux # rc-update add sshd default
+ * service sshd added to runlevel default
+
+ML110G7 linux # nano /etc/conf.d/net
+# This blank configuration will automatically use DHCP for any net.*
+# scripts in /etc/init.d.  To create a more complete configuration,
+# please review /usr/share/doc/openrc*/net.example* and save your configuration
+# in /etc/conf.d/net (this file :]!).
+config_eth0="dhcp"
+
+ML110G7 linux # ln -s /etc/init.d/net.lo /etc/init.d/net.eth0
+ML110G7 linux # rc-update add net.eth0 default
+ * service net.eth0 added to runlevel default
+
+/***今回はスキップ***/
+//ML110G7 linux # nano -w /etc/rc.conf
+
+//なんでかは知らないけどHomeとかキーを押しても反応しない
+ML110G7 linux # nano -w /etc/conf.d/keymaps
+keymap="jp106"
+
+ML110G7 linux # nano -w /etc/conf.d/hwclock
+
+ML110G7 linux # env-update && source /etc/profile
+!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
+>>> Regenerating /etc/ld.so.cache...
+
+コード表示 4.2: /etc/inittabの編集
+# nano -w /etc/inittab
+以下の部分のコメントを外してください。
+
+コード表示 4.3: inittabからシリアルコンソールの部分のコメントを外す
+# SERIAL CONSOLES
+s0:12345:respawn:/sbin/agetty 9600 ttyS0 vt100
+s1:12345:respawn:/sbin/agetty 9600 ttyS1 vt100
+
+ML110G7 linux # passwd
+新しいパスワード:
+新しいパスワードを再入力してください:
+passwd: パスワードは正しく更新されました
+ML110G7 linux # useradd -m -g users -G wheel -s /bin/zsh bsod
+ML110G7 linux # passwd bsod
+新しいパスワード:
+新しいパスワードを再入力してください:
+passwd: パスワードは正しく更新されました
+
+//sudoを使えるようにする
+ # visudo
+デフォルトではviになってるので変更するか、下の方法でもいい
+あまりおすすめできないらしいが
+
+ML110G7 linux # nano /etc/sudoers
+## Uncomment to allow members of group wheel to execute any command
+ %wheel ALL=(ALL) ALL
+
+## Same thing without a password
+# %wheel ALL=(ALL) NOPASSWD: ALL
+
+## Uncomment to allow members of group sudo to execute any command
+ %sudo ALL=(ALL) ALL
+
+ %wheel ALL=(ALL) ALL
+ %sudo ALL=(ALL) ALL
+ だけをアンコメントする
+
+
+ML110G7 linux # emerge -av grub
+
+ML110G7 linux # nano /boot/grub/grub.conf
+
+# This is a sample grub.conf for use with Genkernel, per the Gentoo handbook
+# http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=1&chap=10#doc_chap2
+# If you are not using Genkernel and you need help creating this file, you
+# should consult the handbook. Alternatively, consult the grub.conf.sample that
+# is included with the Grub documentation.
+
+default 0
+timeout 130
+splashimage=(hd0,0)/boot/grub/splash.xpm.gz
+
+title Gentoo Linux          
+root (hd0,0)
+kernel /boot/kernel-genkernel-x86_64-3.7.10-gentoo root=/dev/ram0 real_root=/dev/sda5
+initrd /boot/initramfs-genkernel-x86_64-3.7.10-gentoo
+
+# vim:ft=conf:
+
+
+コード表示 2.5: /etc/mtabの作成
+ML110G7 linux # grep -v rootfs /proc/mounts > /etc/mtab
+
+ML110G7 linux # grub-install --no-floppy /dev/sda
+Installation finished. No error reported.
+This is the contents of the device map /boot/grub/device.map.
+Check if this is correct or not. If any of the lines is incorrect,
+fix it and re-run the script `grub-install'.
+
+(fd0)   /dev/fd0
+(hd0)   /dev/sda
+(hd1)   /dev/sdb
+
+
+ML110G7 linux # exit
+exit
+root@ML110G7:/mnt/gentoo # umount -l /mnt/gentoo{/usr,/home,/opt,/tmp,/var,/boot,/}
+root@ML110G7:/mnt/gentoo# poweroff
+or
+root@ML110G7:/mnt/gentoo# reboot
+
+
+
+USBメモリを抜いてサーバーを再起動したらgentooを起動させる
+GRUBでこけなかったらsshでログインしてみる
+
+//IPアドレスは固定されてない気がするけど...なんで同じアドレスのまま使えるのか謎
+% ssh -C bsod@192.168.1.42
+
+//ためしにsudo使えてるかどうか確認してみる
+ML110G7(Gentoo)% sudo emerge -uDN world
+
+//なんでか知らないけど、btrfsつかった/homeパーティションが読めてないみたい？？
+ML110G7(Gentoo)% df -hT                
+Filesystem     Type      Size  Used Avail Use% Mounted on
+rootfs         rootfs     20G  2.8G   16G  16% /
+udev           devtmpfs   10M  4.0K   10M   1% /dev
+/dev/sda5      ext4       20G  2.8G   16G  16% /
+tmpfs          tmpfs     4.9G  304K  4.9G   1% /run
+shm            tmpfs     4.9G     0  4.9G   0% /dev/shm
+cgroup_root    tmpfs      10M     0   10M   0% /sys/fs/cgroup
+ML110G7(Gentoo)% ls /dev/sd*
+/dev/sda  /dev/sda1  /dev/sda2  /dev/sda5  /dev/sda6
