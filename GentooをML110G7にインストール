@@ -1,19 +1,17 @@
 USBメモリにUbuntuServerを入れて、ssh越しでインストールしてみた
 ちょっとした問題点
-・btrfs使えてないっぽい？ →（# echo CONFIG_NETFILTER_ADVANCED=y >> /usr/src/linux/.configが原因ではない模様）
-・make menuconfigでエラーが出るので不安　→　echo CONFIG_NETFILTER_ADVANCED=y >> /usr/src/linux/.config　が原因だったので解決？
 ・キー入力がなんか変
+・sshつかえん
+
+username
+・blue→ubuntu server
+・bsod→gentoo
 
 ●作業ログ
 ubuntuserverにログインして
 
 blue@ML110G7:~# sudo -i
 root@ML110G7:~# tmux　　　　　　→サーバーとの接続が切れたら# tmux attach
-
-root@ML110G7:~# ls /dev/sd*
-/dev/sda   /dev/sda2  /dev/sda6  /dev/sdb1  /dev/sdc1  /dev/sdd1  /dev/sde1
-/dev/sda1  /dev/sda5  /dev/sdb   /dev/sdc   /dev/sdd   /dev/sde
-
 root@ML110G7:~# parted /dev/sda
 GNU Parted 2.3
 /dev/sda を使用
@@ -22,170 +20,33 @@ GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力
 モデル: ATA VB0250EAVER (scsi)
 ディスク /dev/sda: 250GB
 セクタサイズ (論理/物理): 512B/512B
-パーティションテーブル: msdos
-
-番号  開始    終了    サイズ  タイプ    ファイルシステム  フラグ
- 1    1049kB  1050MB  1049MB  primary   ext2
- 2    1050MB  250GB   249GB   extended
- 5    1051MB  22.0GB  21.0GB  logical   ext4
- 6    22.0GB  250GB   228GB   logical   btrfs
-(parted) q
-
-root@ML110G7:~# parted /dev/sdb
-GNU Parted 2.3
-/dev/sdb を使用
-GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力してください。
-(parted) print                                                            
-モデル: ATA WDC WD30EFRX-68A (scsi)
-ディスク /dev/sdb: 3001GB
-セクタサイズ (論理/物理): 512B/4096B
-パーティションテーブル: gpt
-
-番号  開始    終了    サイズ  ファイルシステム  名前            フラグ
- 1    1049kB  3001GB  3001GB  btrfs             WD30EFRX-68A_1
-(parted) q
-
-root@ML110G7:~# parted /dev/sdc
-GNU Parted 2.3
-/dev/sdc を使用
-GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力してください。
-(parted) print                                                            
-モデル: ATA WDC WD30EFRX-68A (scsi)
-ディスク /dev/sdc: 3001GB
-セクタサイズ (論理/物理): 512B/4096B
-パーティションテーブル: gpt
-
-番号  開始    終了    サイズ  ファイルシステム  名前            フラグ
- 1    1049kB  3001GB  3001GB  btrfs             WD30EFRX-68A_2
-(parted) q
-
-root@ML110G7:~# parted /dev/sdd
-GNU Parted 2.3
-/dev/sdd を使用
-GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力してください。
-(parted) print                                                            
-モデル: ATA WDC WD30EZRX-00M (scsi)
-ディスク /dev/sdd: 3001GB
-セクタサイズ (論理/物理): 512B/4096B
 パーティションテーブル: gpt
 
 番号  開始    終了    サイズ  ファイルシステム  名前  フラグ
- 1    2097kB  3001GB  3001GB  btrfs
+ 1    2097kB  1051MB  1049MB  ext2                    boot
+ 2    1051MB  40.3GB  39.3GB  ext4
+ 3    40.3GB  250GB   210GB   btrfs
+
 (parted) q
 
-root@ML110G7:~# parted /dev/sde
-GNU Parted 2.3
-/dev/sde を使用
-GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力してください。
-(parted) print                                                            
-モデル: BUFFALO USB Flash Disk (scsi)
-ディスク /dev/sde: 8020MB
-セクタサイズ (論理/物理): 512B/512B
-パーティションテーブル: msdos
-
-番号  開始    終了    サイズ  タイプ   ファイルシステム  フラグ
- 1    31.7kB  8013MB  8013MB  primary  xfs               boot
-(parted) q
-
-
-
-//確認できたのでここで不要なファイルや初期化等をする
-
-//インストールに失敗した場合、すぐにアンマウントし、rebootする
-# umount -l /mnt/gentoo{/proc,/dev,/sys,/usr,/home,/opt,/tmp,/var,/boot,/}
-# reboot
-
-//reboot後の作業
-root@ML110G7:~# cd /mnt
-root@ML110G7:/mnt# ls
-gentoo  home
-root@ML110G7:/mnt# rm -r gentoo/ home/
-root@ML110G7:/mnt# cd
-
-root@ML110G7:~# mkfs.ext2 /dev/sda1
-mke2fs 1.42 (29-Nov-2011)
-Filesystem label=
-OS type: Linux
-Block size=4096 (log=2)
-Fragment size=4096 (log=2)
-Stride=0 blocks, Stripe width=0 blocks
-64000 inodes, 256000 blocks
-12800 blocks (5.00%) reserved for the super user
-First data block=0
-Maximum filesystem blocks=264241152
-8 block groups
-32768 blocks per group, 32768 fragments per group
-8000 inodes per group
-Superblock backups stored on blocks: 
-        32768, 98304, 163840, 229376
-
-Allocating group tables: done                            
-Writing inode tables: done                            
-Writing superblocks and filesystem accounting information: done
-
-
-root@ML110G7:~# mkfs.ext4 -j /dev/sda5
-mke2fs 1.42 (29-Nov-2011)
-Filesystem label=
-OS type: Linux
-Block size=4096 (log=2)
-Fragment size=4096 (log=2)
-Stride=0 blocks, Stripe width=0 blocks
-1281120 inodes, 5120000 blocks
-256000 blocks (5.00%) reserved for the super user
-First data block=0
-Maximum filesystem blocks=4294967296
-157 block groups
-32768 blocks per group, 32768 fragments per group
-8160 inodes per group
-Superblock backups stored on blocks: 
-        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208, 
-        4096000
-
-Allocating group tables: done                            
-Writing inode tables: done                            
-Creating journal (32768 blocks): done
-Writing superblocks and filesystem accounting information: done   
-
-
-root@ML110G7:~# mkfs.btrfs /dev/sda6
-
-WARNING! - Btrfs Btrfs v0.19 IS EXPERIMENTAL
-WARNING! - see http://btrfs.wiki.kernel.org before using
-
-fs created label (null) on /dev/sda6
-        nodesize 4096 leafsize 4096 sectorsize 4096 size 212.38GB
-Btrfs Btrfs v0.19
-
-
-root@ML110G7:~# parted /dev/sda
-GNU Parted 2.3
-/dev/sda を使用
-GNU Parted へようこそ！ コマンド一覧を見るには 'help' と入力してください。
-(parted) print                                                            
-モデル: ATA VB0250EAVER (scsi)
-ディスク /dev/sda: 250GB
-セクタサイズ (論理/物理): 512B/512B
-パーティションテーブル: msdos
-
-番号  開始    終了    サイズ  タイプ    ファイルシステム  フラグ
- 1    1049kB  1050MB  1049MB  primary   ext2
- 2    1050MB  250GB   249GB   extended
- 5    1051MB  22.0GB  21.0GB  logical   ext4
- 6    22.0GB  250GB   228GB   logical   btrfs
-(parted) q
-
-//特に問題無さそうなので終了
+root@ML110G7:~# ls -l /dev/sd*
+brw-rw---- 1 root disk 8,  0  4月  5 20:16 /dev/sda
+brw-rw---- 1 root disk 8,  1  4月  5 20:14 /dev/sda1
+brw-rw---- 1 root disk 8,  2  4月  5 20:14 /dev/sda2
+brw-rw---- 1 root disk 8,  3  4月  5 20:14 /dev/sda3
+brw-rw---- 1 root disk 8, 16  4月  5 20:14 /dev/sdb
+brw-rw---- 1 root disk 8, 17  4月  5 20:14 /dev/sdb1
 
 
 //インストール作業
 root@ML110G7:~# mkdir /mnt/gentoo
-root@ML110G7:~# mount -t ext4 /dev/sda5 /mnt/gentoo/
+root@ML110G7:~# mount -t ext4 /dev/sda2 /mnt/gentoo/
 root@ML110G7:~# mkdir /mnt/gentoo/boot
 root@ML110G7:~# mount -t ext2 /dev/sda1 /mnt/gentoo/boot
 root@ML110G7:~# mkdir -p /mnt/home
-root@ML110G7:~# mount -t btrfs /dev/sda6 /mnt/home
+root@ML110G7:~# mount -t btrfs /dev/sda3 /mnt/home
 root@ML110G7:~# cd /mnt/gentoo/
+
 
 root@ML110G7:/mnt/gentoo# wget http://gentoo.channelx.biz/releases/amd64/current-stage3/default/20130321/stage3-amd64-20130321.tar.bz2
 root@ML110G7:/mnt/gentoo# tar xvjpf stage3-*.tar.bz2
@@ -193,17 +54,11 @@ root@ML110G7:/mnt/gentoo# tar xvjpf stage3-*.tar.bz2
 root@ML110G7:/mnt/gentoo# wget http://gentoo.channelx.biz/snapshots/portage-latest.tar.bz2
 root@ML110G7:/mnt/gentoo# tar xvjf portage-latest.tar.bz2 -C /mnt/gentoo/usr
 
-root@ML110G7:/mnt/gentoo# ls
-bin   dev  home  lib32  lost+found  mnt  portage-latest.tar.bz2  root  sbin                           sys  usr
-boot  etc  lib   lib64  media       opt  proc                    run   stage3-amd64-20130321.tar.bz2  tmp  var
 root@ML110G7:/mnt/gentoo# rm stage3-*.tar.bz2* portage-latest.tar.bz2*
-root@ML110G7:/mnt/gentoo# ls
-bin  boot  dev  etc  home  lib  lib32  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  sys  tmp  usr  var
 
 
 
 root@ML110G7:/mnt/gentoo# nano -w /mnt/gentoo/etc/make.conf
-
 # These settings were set by the catalyst build script that automatically
 # built this stage.
 # Please consult /usr/share/portage/config/make.conf.example for a more
@@ -222,7 +77,7 @@ CHOST="x86_64-pc-linux-gnu"
 # profile used for building.
 
 
-USE="bindist mmx sse sse2 ssse3 zsh-completion ramfs curl acpi cpio mkinitcpio busybox mount hardened hddtemp zlib lzo"
+USE="bindist mmx sse sse2 ssse3 zsh-completion ramfs curl acpi cpio mkinitcpio busybox mount hardened hddtemp zlib lzo ipv6 -examples"
 #hardened ramfs mkinitcpio busybox cpio mount hddtemp zlib lzo curl acpi
 
 MAKEOPTS="-j3"
@@ -243,43 +98,9 @@ ML110G7 / # env-update && source /etc/profile
 ML110G7 / # export PS1="(chroot) $PS1"
 
 (chroot) ML110G7 / # time emerge --sync
-Number of files: 163769
-Number of files transferred: 4108
-Total file size: 279.57M bytes
-Total transferred file size: 18.71M bytes
-Literal data: 18.71M bytes
-Matched data: 0 bytes
-File list size: 4.09M
-File list generation time: 0.003 seconds
-File list transfer time: 0.000 seconds
-Total bytes sent: 120.43K
-Total bytes received: 10.42M
-
-sent 120.43K bytes  received 10.42M bytes  1.00M bytes/sec
-total size is 279.57M  speedup is 26.53
-!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
-
-Performing Global Updates:
-(Could take a couple of minutes if you have a lot of binary packages.)
-  .='update pass'  *='binary update'  #='/var/db update'  @='/var/db move'
-  s='/var/db SLOT move'  %='binary move'  S='binary SLOT move'
-  p='update /etc/portage/package.*'
-/usr/portage/profiles/updates/1Q-2013.......................................................................
-...........................
-/usr/portage/profiles/updates/2Q-2013.
-
-
-!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
-
-real    0m11.520s
-user    0m2.080s
-sys     0m1.580s
-
-(chroot) ML110G7 / # eselect news read new
+real    0m11.313s
+user    0m1.832s
+sys     0m1.196s
 
 
 (chroot) ML110G7 / # eselect profile list
@@ -297,7 +118,6 @@ Available profile symlink targets:
   [11]  hardened/linux/amd64/no-multilib
   [12]  hardened/linux/amd64/no-multilib/selinux
   [13]  hardened/linux/uclibc/amd64
-
 (chroot) ML110G7 / # eselect profile set 1
 (chroot) ML110G7 / # eselect profile list
 Available profile symlink targets:
@@ -314,6 +134,9 @@ Available profile symlink targets:
   [11]  hardened/linux/amd64/no-multilib
   [12]  hardened/linux/amd64/no-multilib/selinux
   [13]  hardened/linux/uclibc/amd64
+
+  
+(chroot) ML110G7 / # time emerge -av linux-headers linux-firmware gentoo-sources iptables pciutils syslog-ng fcron dhcpcd openssh genkernel vim mdadm lvm2 cryptsetup sudo zsh grub
 
 
 (chroot) ML110G7 / # nano -w /etc/locale.gen
@@ -349,6 +172,10 @@ ja_JP.UTF-8 UTF-8
 #fr_FR@euro ISO-8859-15
 #it_IT ISO-8859-1
 
+(chroot) ML110G7 / # nano /etc/env.d/02locale
+LANG="ja_JP.UTF-8"
+LC_COLLATE="C"
+
 (chroot) ML110G7 / # locale-gen
  * Generating 2 locales (this might take a while) with 1 jobs
  *  (1/2) Generating en_US.UTF-8 ... [ ok ]
@@ -367,72 +194,7 @@ Australia   EET      Factory  Greenwich  Jamaica   Mexico     Pacific  UCT      
 (chroot) ML110G7 / # echo "Asia/Tokyo" > /etc/timezone
 (chroot) ML110G7 / # cat /etc/timezone
 Asia/Tokyo
-
-
-(chroot) ML110G7 / # time emerge -av linux-headers linux-firmware gentoo-sources
-!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
-
-These are the packages that would be merged, in order:
-
-Calculating dependencies... done!
-[ebuild  N     ] sys-kernel/linux-firmware-20120924  USE="-savedconfig" 15,997 kB
-[ebuild  N     ] sys-devel/bc-1.06.95  USE="readline -libedit -static" 284 kB
-[ebuild     U  ] sys-kernel/linux-headers-3.7 [3.6] 5,201 kB
-[ebuild  N     ] sys-kernel/gentoo-sources-3.7.10:3.7.10  USE="-build -deblob -symlink" 68,335 kB
-
-Total: 4 packages (1 upgrade, 3 new), Size of downloads: 89,815 kB
-
-Would you like to merge these packages? [Yes/No] yes
-
-
-
- * If you are upgrading from a previous kernel, you may be interested
- * in the following document:
- *   - General upgrade guide: http://www.gentoo.org/doc/en/kernel-upgrade.xml
-
- * For more info on this patchset, and how to report problems, see:
- * http://dev.gentoo.org/~mpagano/genpatches
->>> sys-kernel/gentoo-sources-3.7.10 merged.
->>> Regenerating /etc/ld.so.cache...
-
->>> Recording sys-kernel/gentoo-sources in "world" favorites file...
-
- * Messages for package sys-kernel/linux-firmware-20120924:
-
- * Your configuration for sys-kernel/linux-firmware-20120924 has been saved in 
- * /etc/portage/savedconfig/sys-kernel/linux-firmware-20120924 for your editing pleasure.
- * You can edit these files by hand and remerge this package with
- * USE=savedconfig to customise the configuration.
- * You can rename this file/directory to one of the following for
- * its configuration to apply to multiple versions:
- * ${PORTAGE_CONFIGROOT}/etc/portage/savedconfig/
- * [${CTARGET}|${CHOST}|""]/${CATEGORY}/[${PF}|${P}|${PN}]
- * If you are only interested in particular firmware files, edit the saved
- * configfile and remove those that you do not want.
-
- * Messages for package sys-kernel/gentoo-sources-3.7.10:
-
- * If you are upgrading from a previous kernel, you may be interested
- * in the following document:
- *   - General upgrade guide: http://www.gentoo.org/doc/en/kernel-upgrade.xml
->>> Auto-cleaning packages...
-
->>> No outdated packages were found on your system.
-
- * Regenerating GNU info directory index...
- * Processed 76 info files.
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
-
-real    3m6.516s
-user    1m9.240s
-sys     0m20.629s
+(chroot) ML110G7 / # date
 
 
 
@@ -450,9 +212,7 @@ make[1]: *** [localyesconfig] エラー 2
 make: *** [localyesconfig] エラー 2
 
 
-
 (chroot) ML110G7 linux # make menuconfig
-
 File systems  --->
   <*> Second extended fs support
     [*]   Ext2 extended attributes
@@ -472,6 +232,13 @@ File systems  --->
     [ ]   Btrfs with integrity check tool compiled in (DANGEROUS) (NEW)
   <*> NILFS2 file system support (EXPERIMENTAL)
   
+  [*] Inotify file change notification support
+    [*]   Inotify support for userspace
+  
+  Pseudo filesystems --->
+    [*] /proc file system support
+    Tmpfs virtual memory file system support (former shm fs)
+    
   -*- Native language support  ---> 
      <*>   Japanese charsets (Shift-JIS, EUC-JP) 
      
@@ -482,13 +249,14 @@ File systems  --->
 
   -*-   AES cipher algorithms
   <*>   AES cipher algorithms (x86_64)
-  
+
+
 Device Drivers  --->
   Generic Driver Options --->
     [*] Maintain a devtmpfs filesystem to mount at /dev
-    [ ]   Automount devtmpfs at /dev, after the kernel mounted the rootfs
+    [*]   Automount devtmpfs at /dev, after the kernel mounted the rootfs
   
-  < > Memory Technology Device (MTD) support  ---> 
+  <*> Memory Technology Device (MTD) support  ---> 
   
   [*] Multiple devices driver support (RAID and LVM)  --->
     -*-   RAID support
@@ -498,7 +266,7 @@ Device Drivers  --->
     -*-     RAID-1 (mirroring) mode
     -*-     RAID-10 (mirrored striping) mode
     -*-     RAID-4/RAID-5/RAID-6 mode
-    [ ]       RAID-4/RAID-5/RAID-6 Multicore processing (EXPERIMENTAL) (NEW)
+    [*]       RAID-4/RAID-5/RAID-6 Multicore processing (EXPERIMENTAL) (NEW)
     < >     Multipath I/O support (NEW)
     < >     Faulty test module for MD (NEW)
     <*>   Device mapper support
@@ -516,19 +284,19 @@ Device Drivers  --->
       [*]   Synaptics USB device support
    
   Graphics support  --->
-    [*] Support for frame buffer devices  --->
-      <*>   Matrox acceleration
-      [*]     Millennium I/II support (NEW)
-      [*]     Mystique support (NEW)
-      [*]     G100/G200/G400/G450/G550 support
-      <*>     Matrox I2C support
- <*>       G400 second head support
+    <*> Matrox g200/g400
+      [*] Support for frame buffer devices  --->
+ <*>   Matrox acceleration
+	[*]     Millennium I/II support (NEW)
+	[*]     Mystique support (NEW)
+	[*]     G100/G200/G400/G450/G550 support
+	<*>     Matrox I2C support
+	  <*>       G400 second head support
  
 //HID support  --->  になって不要になった？？？？
   [*] HID Devices  --->
     <*>   USB Human Interface Device (full HID) support
-    
-    
+
 
 [*] Networking support  --->
   Networking options  --->
@@ -536,27 +304,19 @@ Device Drivers  --->
     [*]   IGMP/MLD snooping (NEW)
     < > Distributed Switch Architecture support
     <*> 802.1Q VLAN Support
-  
-  
+
+
 [*] Virtualization (NEW)  --->
   <*>   Kernel-based Virtual Machine (KVM) support
   <*>     KVM for Intel processors support
-  
-  
+
+
 General setup  --->
   [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
   ()    Initramfs source file(s) (NEW)
-
-  [*] Configure standard kernel features (expert users)  --->
-//なぜか上部に出てくる
-  [*]   Support initial ramdisks compressed using gzip (NEW)
-  [*]   Support initial ramdisks compressed using bzip2
-  [ ]   Support initial ramdisks compressed using LZMA
-  [ ]   Support initial ramdisks compressed using XZ
-  [*]   Support initial ramdisks compressed using LZO
   [*] Optimize for size
-  
-  
+
+
 Processor type and features  --->
   [*] Symmetric multi-processing support (NEW)
   [*] Paravirtualized guest support  --->
@@ -570,6 +330,7 @@ Processor type and features  --->
   [*] Enable KSM for page merging
   [*] Enable recovery from hardware memory errors
     <*>   HWPoison pages injector 
+
 
 Power management and ACPI options  --->
   [*] ACPI (Advanced Configuration and Power Interface) Support  ---> 
@@ -587,12 +348,11 @@ Power management and ACPI options  --->
     <*>   'ondemand' cpufreq policy governor
     <*>   'conservative' cpufreq governor 
 
+
 Security options  --->
+  [ ] Enable the securityfs filesystem 
   [*] Security hooks for pathname based access control
   [*] Enable Intel(R) Trusted Execution Technology (Intel(R) TXT)
-  
-  
-  
   [*] TOMOYO Linux Support
   (2048) Default maximal count for learning mode (NEW)
   (1024) Default maximal count for audit log (NEW
@@ -601,19 +361,23 @@ Security options  --->
   (/sbin/init) Trigger for calling userspace policy loader (NEW)
   [*] AppArmor support
   (1)   AppArmor boot parameter default value (NEW)
-  
-  
+
+
 Save an Alternate Configuration File
 →<Exit>
 
 
 
 (chroot) ML110G7 linux # time make && make modules_install
-real    11m59.884s
-user    10m42.008s
-sys     0m47.455s
+real    12m30.578s
+user    11m10.302s
+sys     0m50.067s
   INSTALL drivers/char/kcopy/kcopy.ko
   INSTALL drivers/cpufreq/cpufreq_powersave.ko
+  INSTALL drivers/xen/xen-acpi-processor.ko
+  INSTALL drivers/xen/xen-gntalloc.ko
+  INSTALL drivers/xen/xen-gntdev.ko
+  INSTALL drivers/xen/xen-pciback/xen-pciback.ko
   INSTALL net/ipv4/netfilter/ipt_MASQUERADE.ko
   INSTALL net/ipv4/netfilter/iptable_nat.ko
   INSTALL net/ipv4/netfilter/nf_nat_ipv4.ko
@@ -626,46 +390,12 @@ sys     0m47.455s
   INSTALL net/netfilter/xt_nat.ko
   DEPMOD  3.7.10-gentoo
 
-(chroot) ML110G7 linux # cp /usr/src/linux/arch/x86_64/boot/bzImage /boot/kernel
 
->>> Recording sys-kernel/genkernel in "world" favorites file...
+(chroot) ML110G7 linux # cp arch/x86_64/boot/bzImage /boot/kernel
 
- * Messages for package sys-kernel/genkernel-3.4.45:
-
- * Copying files to /var/cache/genkernel/src...
- * Documentation is available in the genkernel manual page
- * as well as the following URL:
- * http://www.gentoo.org/doc/en/genkernel.xml
- * This package is known to not work with reiser4.  If you are running
- * reiser4 and have a problem, do not file a bug.  We know it does not
- * work and we don't plan on fixing it since reiser4 is the one that is
- * broken in this regard.  Try using a sane filesystem like ext3 or
- * even reiser3.
- * The LUKS support has changed from versions prior to 3.4.4.  Now,
- * you use crypt_root=/dev/blah instead of real_root=luks:/dev/blah.
- * Local use flag 'crypt' has been renamed to 'cryptsetup' (bug #414523).
- * Please set flag 'cryptsetup' for this very package if you would like
- * to have genkernel create an initramfs with LUKS support.
- * Sorry for the inconvenience.
->>> Auto-cleaning packages...
-
->>> No outdated packages were found on your system.
-
- * Regenerating GNU info directory index...
- * Processed 77 info files.
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
-
-real    1m8.544s
-user    0m29.090s
-sys     0m18.301s
-
-
-(chroot) ML110G7 linux # time genkernel all
+(chroot) ML110G7 linux # time genkernel all --mdadm --luks --lvm
 * Gentoo Linux Genkernel; Version 3.4.45
-* Running with options: all
+* Running with options: all --mdadm --luks --lvm
 
 * Using genkernel.conf from /etc/genkernel.conf
 * Sourcing arch-specific config.sh from /usr/share/genkernel/arch/x86_64/config.sh ..
@@ -674,7 +404,7 @@ sys     0m18.301s
 * Linux Kernel 3.7.10-gentoo for x86_64...
 * .. with config file /usr/share/genkernel/arch/x86_64/kernel-config
 * kernel: Using config from /usr/share/genkernel/arch/x86_64/kernel-config
-*         Previous config backed up to .config--2013-04-02--12-24-27.bak
+*         Previous config backed up to .config--2013-04-05--22-09-38.bak
 * kernel: >> Running mrproper...
 *         >> Running oldconfig...
 * kernel: >> Cleaning...
@@ -696,6 +426,20 @@ sys     0m18.301s
 *         >> Appending auxilary cpio data...
 *         >> Copying keymaps
 *         >> Appending busybox cpio data...
+*         >> Appending lvm cpio data...
+*           LVM: Adding support (compiling binaries)...
+* lvm: >> Applying patches...
+*           - lvm2-2.02.72-no-export-dynamic.patch
+* lvm: >> Configuring...
+* lvm: >> Compiling...
+*       >> Copying to bincache...
+*         >> Appending mdadm cpio data...
+*               MDADM: Skipping inclusion of mdadm.conf
+*               MDADM: Adding support (compiling binaries)...
+* mdadm: >> Compiling...
+*       >> Copying to bincache...
+*         >> Appending luks cpio data...
+* Including LUKS support
 *         >> Appending modules cpio data...
 *         >> Appending blkid cpio data...
 *         >> Appending modprobed cpio data...
@@ -711,9 +455,10 @@ sys     0m18.301s
 * 
 * If you require Genkernel's hardware detection features; you MUST
 * tell your bootloader to use the provided INITRAMFS file.
-
 * WARNING... WARNING... WARNING...
 * Additional kernel cmdline arguments that *may* be required to boot properly...
+* add "dolvm" for lvm support
+* add "domdadm" for RAID support
 * With support for several ext* filesystems available, it may be needed to
 * add "rootfstype=ext3" or "rootfstype=ext4" to the list of boot parameters.
 
@@ -722,15 +467,16 @@ sys     0m18.301s
 * 
 * Make sure you have the latest ~arch genkernel before reporting bugs.
 
-real    15m53.056s
-user    25m54.633s
-sys     2m4.236s
+real    16m33.814s
+user    26m39.468s
+sys     2m8.680s
 
 
-//あとでGRUB設定するときに確認する
+
+
+(chroot) ML110G7 linux # mv /boot/initramfs-genkernel-x86_64-3.7.10-gentoo /boot/initramfs
 (chroot) ML110G7 linux # ls /boot/kernel* /boot/initramfs*
-/boot/initramfs-genkernel-x86_64-3.7.10-gentoo  /boot/kernel  /boot/kernel-genkernel-x86_64-3.7.10-gentoo
-
+/boot/initramfs  /boot/kernel  /boot/kernel-genkernel-x86_64-3.7.10-gentoo
 
 (chroot) ML110G7 linux # nano /etc/fstab
 # /etc/fstab: static file system information.
@@ -751,223 +497,35 @@ sys     2m4.236s
 # NOTE: If your BOOT partition is ReiserFS, add the notail option to opts.
 /dev/sda1               /boot           ext2            noauto,noatime  1 2
 /dev/sda5               /               ext4            noatime         0 1
-/dev/sda6               /home           btrfs           noatime,autodefrag,space_cache,inode_cache,compress=lzo         0 0
+/dev/sda6               /home           btrfs           noatime,autodefrag,space_cache,inode_cache,compress=lzo         0 1
+#/dev/SWAP              none            swap            sw              0 0
 /dev/cdrom              /mnt/cdrom      auto            noauto,ro       0 0
-/dev/fd0                /mnt/floppy     auto            noauto          0 0
+#/dev/fd0                /mnt/floppy     auto            noauto          0 0
+
 
 
 (chroot) ML110G7 linux # nano -w /etc/conf.d/hostname
 # Set to the hostname of this machine
 hostname="ML110G7(Gentoo)"
 
-
-(chroot) ML110G7 linux # emerge -av sudo
-!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
-
-These are the packages that would be merged, in order:
-
-Calculating dependencies... done!
-[ebuild  N     ] app-admin/metalog-2  USE="unicode" 335 kB
-[ebuild  N     ] virtual/logger-0  0 kB
-[ebuild  N     ] dev-libs/libtasn1-2.13  USE="-doc -static-libs" 1,919 kB
-[ebuild  NS    ] sys-devel/automake-1.10.3:1.10 [1.11.6:1.11] 936 kB
-[ebuild  N     ] dev-libs/nettle-2.6:0/4  USE="gmp -doc -static-libs {-test}" 1,354 kB
-[ebuild  N     ] net-libs/gnutls-2.12.23  USE="bindist cxx nettle nls zlib -doc -examples -guile -lzo -pkcs11 -static-libs {-test}" 7,109 kB
-[ebuild  N     ] mail-mta/nullmailer-1.11-r1  USE="ssl" 231 kB
-[ebuild  N     ] virtual/mta-1  0 kB
-[ebuild  N     ] app-admin/sudo-1.8.6_p3  USE="nls pam -ldap -offensive (-selinux) -skey" 1,812 kB
-
-Total: 9 packages (8 new, 1 in new slot), Size of downloads: 13,693 kB
-
-Would you like to merge these packages? [Yes/No] yes
-
- * To use the -A (askpass) option, you need to install a compatible
- * password program from the following list. Starred packages will
- * automatically register for the use with sudo (but will not force
- * the -A option):
- * 
- *  [*] net-misc/ssh-askpass-fullscreen
- *      net-misc/x11-ssh-askpass
- * 
- * You can override the choice by setting the SUDO_ASKPASS environmnent
- * variable to the program you want to use.
->>> app-admin/sudo-1.8.6_p3 merged.
->>> Regenerating /etc/ld.so.cache...
-
->>> Recording app-admin/sudo in "world" favorites file...
-
- * Messages for package mail-mta/nullmailer-1.11-r1:
-
- * To create an initial setup, please do:
- * emerge --config =mail-mta/nullmailer-1.11-r1
-
- * Messages for package app-admin/sudo-1.8.6_p3:
-
- * To use the -A (askpass) option, you need to install a compatible
- * password program from the following list. Starred packages will
- * automatically register for the use with sudo (but will not force
- * the -A option):
- * 
- *  [*] net-misc/ssh-askpass-fullscreen
- *      net-misc/x11-ssh-askpass
- * 
- * You can override the choice by setting the SUDO_ASKPASS environmnent
- * variable to the program you want to use.
->>> Auto-cleaning packages...
-
->>> No outdated packages were found on your system.
-
- * Regenerating GNU info directory index...
- * Processed 85 info files.
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
- 
-(chroot) ML110G7 linux # emerge -av iptables zsh vim metalog pciutils syslog-ng fcron dhcpcd
-!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
+(chroot) ML110G7 linux # emerge -av ufw --autounmask-write
+(chroot) ML110G7 linux # dispatch-conf
+作業手順
+１．e
+２．ファイルが開くのでsave
+３．u
+(chroot) ML110G7 linux # emerge -av ufw
+(chroot) ML110G7 linux # ufw enable
+(chroot) ML110G7 linux # ufw allow ssh
+(chroot) ML110G7 linux # ufw allow http
 
 
-These are the packages that would be merged, in order:
-
-Calculating dependencies... done!
-[ebuild  N     ] sys-process/cronbase-0.3.3  0 kB
-[ebuild  N     ] dev-libs/eventlog-0.2.12  USE="-static-libs" 297 kB
-[ebuild  N     ] net-misc/dhcpcd-5.6.4  USE="zeroconf" 84 kB
-[ebuild  N     ] app-admin/eselect-vi-1.1.7-r1  2 kB
-[ebuild  N     ] app-admin/eselect-ctags-1.14  8 kB
-[ebuild  N     ] app-shells/zsh-5.0.2  USE="gdbm pcre unicode -caps -debug -doc -examples -maildir -static" 2,955 kB
-[ebuild   R    ] app-admin/metalog-2  USE="unicode" 0 kB
-[ebuild  N     ] sys-apps/hwids-20130329  USE="udev" 1,464 kB
-[ebuild  N     ] dev-util/ctags-5.8  USE="-ada" 469 kB
-[ebuild  N     ] net-firewall/iptables-1.4.16.3  USE="ipv6 -netlink -static-libs" 525 kB
-[ebuild  N     ] app-admin/syslog-ng-3.2.5  USE="ipv6 pcre ssl tcpd -caps -hardened (-selinux) -spoof-source -sql" 1,415 kB
-[ebuild  N     ] sys-process/fcron-3.1.1  USE="pam readline system-crontab -debug (-selinux)" LINGUAS="-fr" 584 kB
-[ebuild  N     ] sys-apps/pciutils-3.1.10  USE="zlib -static-libs" 338 kB
-[ebuild  N     ] app-editors/vim-core-7.3.409  USE="acl nls -livecd" 9,506 kB
-[ebuild  N     ] app-editors/vim-7.3.409  USE="acl gpm nls -X -cscope -debug -minimal -perl -python -ruby -vim-pager" 0 kB
-[ebuild  N     ] app-vim/gentoo-syntax-20120109  USE="-ignore-glep31" 20 kB
-
-Total: 16 packages (15 new, 1 reinstall), Size of downloads: 17,662 kB
-
-Would you like to merge these packages? [Yes/No] yes
-
- * Updating documentation tags in /usr/share/vim/vim73
- * Note for developers and anyone else who edits ebuilds:
- *     This release of gentoo-syntax now contains filetype rules to set
- *     fileencoding for ebuilds and ChangeLogs to utf-8 as per GLEP 31.
- *     If you find this feature breaks things, please submit a bug and
- *     assign it to vim@gentoo.org. You can use the 'ignore-glep31' USE
- *     flag to remove these rules.
-
->>> app-vim/gentoo-syntax-20120109 merged.
->>> Regenerating /etc/ld.so.cache...
-
- * Messages for package sys-process/cronbase-0.3.3:
-
- * Forcing proper permissions on
- * /etc/cron.{hourly,daily,weekly,monthly},
- * /var/spool/cron/ and /var/spool/cron/lastrun/
-
- * Messages for package net-misc/dhcpcd-5.6.4:
-
- * You have installed dhcpcd with zeroconf support.
- * This means that it will always obtain an IP address even if no
- * DHCP server can be contacted, which will break any existing
- * failover support you may have configured in your net configuration.
- * This behaviour can be controlled with the -L flag.
- * See the dhcpcd man page for more details.
- * 
- * Users upgrading from 4.0 series should pay attention to removal
- * of compat useflag. This changes behavior of dhcp in wide manner:
- * dhcpcd no longer sends a default ClientID for ethernet interfaces.
- * This is so we can re-use the address the kernel DHCP client found.
- * To retain the old behaviour of sending a default ClientID based on the
- * hardware address for interface, simply add the keyword clientid
- * to dhcpcd.conf or use commandline parameter -I ''
- * 
- * Also, users upgrading from 4.0 series should be aware that
- * the -N, -R and -Y command line options no longer exist.
- * These are controled now by nohook options in dhcpcd.conf.
-
- * Messages for package app-shells/zsh-5.0.2:
-
- * 
- * If you want to enable Portage completions and Gentoo prompt,
- * emerge app-shells/zsh-completion and add
- *      autoload -U compinit promptinit
- *      compinit
- *      promptinit; prompt gentoo
- * to your ~/.zshrc
- * 
- * Also, if you want to enable cache for the completions, add
- *      zstyle ':completion::complete:*' use-cache 1
- * to your ~/.zshrc
- * 
-
- * Messages for package dev-util/ctags-5.8:
-
- * You can set the version to be started by /usr/bin/ctags through
- * the ctags eselect module. "man ctags.eselect" for details.
-
- * Messages for package app-admin/syslog-ng-3.2.5:
-
- * It is highly recommended that app-admin/logrotate be emerged to
- * manage the log files.  syslog-ng installs a file in /etc/logrotate.d
- * for logrotate to use.
-
- * If it's the first time you install fcron make sure to execute
- *   emerge --config sys-process/fcron
- * to configure the proper settings.
-
- * Messages for package app-editors/vim-core-7.3.409:
-
- * Vim 7 includes an integrated spell checker. You need to install
- * word list files before you can use it. There are ebuilds for
- * some of these named app-vim/vim-spell-*. If your language of
- * choice is not included, please consult vim-spell.eclass for
- * instructions on how to make a package.
- * Note that the English word lists are no longer installed by
- * default.
-
- * Messages for package app-editors/vim-7.3.409:
-
- * To install a GUI version of vim, use the app-editors/gvim
- * package.
- * Vim 7 includes an integrated spell checker. You need to install
- * word list files before you can use it. There are ebuilds for
- * some of these named app-vim/vim-spell-*. If your language of
- * choice is not included, please consult vim-spell.eclass for
- * instructions on how to make a package.
- * Note that the English word lists are no longer installed by
- * default.
- * To see what's new in this release, use :help version7.txt
-
- * Messages for package app-vim/gentoo-syntax-20120109:
-
- * Note for developers and anyone else who edits ebuilds:
- *     This release of gentoo-syntax now contains filetype rules to set
- *     fileencoding for ebuilds and ChangeLogs to utf-8 as per GLEP 31.
- *     If you find this feature breaks things, please submit a bug and
- *     assign it to vim@gentoo.org. You can use the 'ignore-glep31' USE
- *     flag to remove these rules.
->>> Auto-cleaning packages...
-
->>> No outdated packages were found on your system.
-
- * Regenerating GNU info directory index...
- * Processed 92 info files.
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
+(chroot) ML110G7 linux # nano -w /etc/ssh/sshd_config
+//sshの設定ファイルよくわからないままなのでubuntu serverでやってたことと同じように変更してみた
+https://github.com/bleuscr/memo/commit/ace18785fbf7861f4ef6f9a1a9babbc10205fc57#ssh
+// s/PermitRootLogin yes/PermitRootLogin no
+// s/#PasswordAuthentication yes/PasswordAuthentication no
+// UseDNS no
 
 (chroot) ML110G7 linux # rc-update add dhcpcd default
  * service dhcpcd added to runlevel default
@@ -975,11 +533,9 @@ Would you like to merge these packages? [Yes/No] yes
  * service syslog-ng added to runlevel default
 (chroot) ML110G7 linux # rc-update add fcron default
  * service fcron added to runlevel default
-(chroot) ML110G7 linux # rc-update add metalog default
- * service metalog added to runlevel default
 (chroot) ML110G7 linux # rc-update add sshd default
  * service sshd added to runlevel default
-
+ 
 (chroot) ML110G7 linux # nano /etc/conf.d/net
 # This blank configuration will automatically use DHCP for any net.*
 # scripts in /etc/init.d.  To create a more complete configuration,
@@ -991,7 +547,6 @@ config_eth0="dhcp"
 (chroot) ML110G7 linux # rc-update add net.eth0 default
  * service net.eth0 added to runlevel default
 
- 
 (chroot) ML110G7 linux # nano -w /etc/conf.d/keymaps
 # Use keymap to specify the default console keymap.  There is a complete tree
 # of keymaps in /usr/share/keymaps to choose from.
@@ -1022,7 +577,6 @@ fix_euro="NO"
 (chroot) ML110G7 linux # env-update && source /etc/profile
 !!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
 >>> Regenerating /etc/ld.so.cache...
-
 
 ML110G7 linux # nano -w /etc/inittab
 以下の部分のコメントを外してください。
@@ -1061,53 +615,8 @@ ML110G7 linux # nano /etc/sudoers
  %sudo ALL=(ALL) ALL
  だけをアンコメントする
  
- 
-ML110G7 linux # emerge -av grub
-!!! Found 2 make.conf files, using both '/etc/make.conf' and '/etc/portage/make.conf'
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
-
-These are the packages that would be merged, in order:
-
-Calculating dependencies... done!
-[ebuild  N     ] app-emulation/emul-linux-x86-baselibs-20130224  USE="development" 40,865 kB
-[ebuild  N     ] sys-boot/grub-0.97-r12  USE="ncurses -custom-cflags -netboot -static" 1,034 kB
-
-Total: 2 packages (2 new), Size of downloads: 41,898 kB
-
-Would you like to merge these packages? [Yes/No] yes
-
-
->>> Recording sys-boot/grub in "world" favorites file...
-
- * Messages for package sys-boot/grub-0.97-r12:
-
- * 
- * To avoid automounting and auto(un)installing with /boot,
- * just export the DONT_MOUNT_BOOT variable.
- * 
- * 
- * To avoid automounting and auto(un)installing with /boot,
- * just export the DONT_MOUNT_BOOT variable.
- * 
- * To interactively install grub files to another device such as a USB
- * stick, just run the following and specify the directory as prompted:
- *    emerge --config =grub-0.97-r12
- * Alternately, you can export GRUB_ALT_INSTALLDIR=/path/to/use to tell
- * grub where to install in a non-interactive way.
->>> Auto-cleaning packages...
-
->>> No outdated packages were found on your system.
-
- * Regenerating GNU info directory index...
- * Processed 94 info files.
-
- * IMPORTANT: 5 news items need reading for repository 'gentoo'.
- * Use eselect news to read news items.
-
-
+ML110G7 linux # ls /boot/kernel* /boot/initramfs*
+/boot/initramfs  /boot/kernel  /boot/kernel-genkernel-x86_64-3.7.10-gentoo
 ML110G7 linux # nano /boot/grub/grub.conf
 # This is a sample grub.conf for use with Genkernel, per the Gentoo handbook
 # http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=1&chap=10#doc_chap2
@@ -1116,16 +625,15 @@ ML110G7 linux # nano /boot/grub/grub.conf
 # is included with the Grub documentation.
 
 default 0
-timeout 130
+timeout 30
 splashimage=(hd0,0)/boot/grub/splash.xpm.gz
 
 title Gentoo Linux          
 root (hd0,0)
-kernel /boot/kernel-genkernel-x86_64-3.7.10-gentoo root=/dev/ram0 real_root=/dev/sda5
-initrd /boot/initramfs-genkernel-x86_64-3.7.10-gentoo
+kernel /boot/kernel-genkernel-x86_64-3.7.10-gentoo root=/dev/ram0 real_root=/dev/sda2
+initrd /boot/initramfs                               
 
 # vim:ft=conf:
-
 
 
 ML110G7 linux # grep -v rootfs /proc/mounts > /etc/mtab
@@ -1138,50 +646,26 @@ fix it and re-run the script `grub-install'.
 (fd0)   /dev/fd0
 (hd0)   /dev/sda
 (hd1)   /dev/sdb
-(hd2)   /dev/sdc
-(hd3)   /dev/sdd
-(hd4)   /dev/sde
+
+
+
+
 
 
 ML110G7 linux # exit
 exit
-root@ML110G7:/mnt/gentoo # umount -l /mnt/gentoo{/usr,/home,/opt,/tmp,/var,/boot,/}
+root@ML110G7:~# umount -l /mnt/gentoo{/usr,/home,/opt,/tmp,/var,/boot,/}
 umount: /mnt/gentoo/usr: マウントされていません
 umount: /mnt/gentoo/home: マウントされていません
 umount: /mnt/gentoo/opt: マウントされていません
 umount: /mnt/gentoo/tmp: マウントされていません
 umount: /mnt/gentoo/var: マウントされていません
-
 root@ML110G7:~# poweroff
-or
-root@ML110G7:/mnt/gentoo# reboot
 
 
 
-//やはり /homeパーティションが見えない・・・
-ML110G7(Gentoo)% df -hT
-Filesystem     Type      Size  Used Avail Use% Mounted on
-rootfs         rootfs     20G  2.8G   16G  16% /
-udev           devtmpfs   10M  4.0K   10M   1% /dev
-/dev/sda5      ext4       20G  2.8G   16G  16% /
-tmpfs          tmpfs     4.9G  504K  4.9G   1% /run
-shm            tmpfs     4.9G     0  4.9G   0% /dev/shm
-cgroup_root    tmpfs      10M     0   10M   0% /sys/fs/cgroup
-
-ML110G7(Gentoo)% mount | grep /dev/sd
-/dev/sda5 on / type ext4 (rw,noatime,data=ordered)
-
-
-ML110G7(Gentoo)% ls /dev/sd*
-/dev/sda   /dev/sda2  /dev/sda6  /dev/sdb1  /dev/sdc1  /dev/sdd1
-/dev/sda1  /dev/sda5  /dev/sdb	 /dev/sdc   /dev/sdd
-
-ML110G7(Gentoo)% ls /dev/sd*
-/dev/sda   /dev/sda2  /dev/sda6  /dev/sdb1  /dev/sdc1  /dev/sdd1
-/dev/sda1  /dev/sda5  /dev/sdb	 /dev/sdc   /dev/sdd
-
-
-
+//sshで接続できなくなったので(iptablesつかったため？)できずにいる
+=========================================================================================================================
 ML110G7(Gentoo)% sudo emerge -uDN world
 We trust you have received the usual lecture from the local System
 Administrator. It usually boils down to these three things:
