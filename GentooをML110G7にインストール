@@ -1,7 +1,7 @@
 USBメモリにUbuntuServerを入れて、ssh越しでインストールしてみた
 ちょっとした問題点
-・キー入力がなんか変
-・sshつかえん
+・キー入力がなんか変　→未解決。HomeとかEndoとかDelとかがまともな反応しない
+・sshつかえん   　　　　　→なおった？eth0じゃないし、いろいろ間違ってたっぽい　末尾のメモ参照
 
 username
 ・blue→ubuntu server
@@ -67,7 +67,7 @@ root@ML110G7:/mnt/gentoo# rm stage3-*.tar.bz2* portage-latest.tar.bz2*
 
 
 root@ML110G7:/mnt/gentoo# nano -w /mnt/gentoo/etc/portage/make.conf
-// /etc/make.conf
+// /etc/make.conf　ではなく/etc/portage/make.conf　でやること
 
 # These settings were set by the catalyst build script that automatically
 # built this stage.
