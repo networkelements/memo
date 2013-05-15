@@ -546,6 +546,7 @@ https://github.com/bleuscr/memo/commit/ace18785fbf7861f4ef6f9a1a9babbc10205fc57#
 (chroot) ML110G7 linux # rc-update add sshd default
  * service sshd added to runlevel default
  
+//ここは何も書かないほうがいい？？
 (chroot) ML110G7 linux # nano /etc/conf.d/net
 # This blank configuration will automatically use DHCP for any net.*
 # scripts in /etc/init.d.  To create a more complete configuration,
@@ -553,9 +554,15 @@ https://github.com/bleuscr/memo/commit/ace18785fbf7861f4ef6f9a1a9babbc10205fc57#
 # in /etc/conf.d/net (this file :]!).
 config_eth0="dhcp"
 
+
+
+//udevで変わってしまってるのでeth0からenp2s0へ変更する(末尾のメモ参照)
 (chroot) ML110G7 linux # ln -s /etc/init.d/net.lo /etc/init.d/net.eth0
 (chroot) ML110G7 linux # rc-update add net.eth0 default
  * service net.eth0 added to runlevel default
+ 
+(chroot) ML110G7 linux # ln -s /etc/init.d/net.lo /etc/init.d/net.enp2s0
+(chroot) ML110G7 linux # rc-update add net.enp2s0 default
 
 (chroot) ML110G7 linux # nano -w /etc/conf.d/keymaps
 # Use keymap to specify the default console keymap.  There is a complete tree
