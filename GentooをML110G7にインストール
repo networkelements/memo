@@ -1,6 +1,6 @@
 USBメモリにUbuntuServerを入れて、ssh越しでインストールしてみた
 ちょっとした問題点
-・キー入力がなんか変　→未解決。HomeとかEndoとかDelとかがまともな反応しない
+・キー入力がなんか変　→未解決。HomeとかEndとかDelとかがまともな反応しない
 ・sshつかえん   　　　　　→なおった？eth0じゃないし、いろいろ間違ってたっぽい　末尾のメモ参照
 
 username
@@ -888,8 +888,53 @@ Total: 85 packages (85 new), Size of downloads: 16,838 kB
 
 Would you like to merge these packages? [Yes/No] yes
 
+ * Compilation and optimization of Python modules for CPython 2.7 ...    [ ok ]
+ * Please read /usr/share/bash-completion/git for Git bash command completion
+ * Please read /usr/share/bash-completion/git-prompt for Git bash prompt
+ * Note that the prompt bash code is now in the seperate script
+ * These additional scripts need some dependencies:
+
+ *   git-quiltimport  : dev-util/quilt
+ *   git-instaweb     : || ( www-servers/lighttpd www-servers/apache )
+
+>>> dev-vcs/git-1.8.1.5 merged.
+>>> Regenerating /etc/ld.so.cache...
+
+>>> Recording dev-vcs/git in "world" favorites file...
+
+ * Messages for package app-crypt/gnupg-2.0.19:
+
+ * If you wish to view images emerge:
+ * media-gfx/xloadimage, media-gfx/xli or any other viewer
+ * Remember to use photo-viewer option in configuration file to activate
+ * the right viewer.
+ * 
+ * Please remember to restart gpg-agent if a different version
+ * of the agent is currently used. If you are unsure of the gpg
+ * agent you are using please run 'killall gpg-agent',
+ * and to start a fresh daemon just run 'gpg-agent --daemon'.
+
+ * Messages for package dev-vcs/git-1.8.1.5:
+
+ * These additional scripts need some dependencies:
+ *   git-quiltimport  : dev-util/quilt
+ *   git-instaweb     : || ( www-servers/lighttpd www-servers/apache )
+>>> Auto-cleaning packages...
+
+>>> No outdated packages were found on your system.
+
+ * Regenerating GNU info directory index...
+ * Processed 105 info files.
+
+ * IMPORTANT: 2 config files in '/etc' need updating.
+ * See the CONFIGURATION FILES section of the emerge
+ * man page to learn how to update config files.
+
+ * IMPORTANT: 5 news items need reading for repository 'gentoo'.
+ * Use eselect news to read news items.
+
 
 
 ML110G7(Gentoo)% git clone https://github.com/clear-code/zsh.d.git ~/.zsh.d
-ML110G7(Gentoo)%  echo "source ~/.zsh.d/zshrc" > ~/.zshrc
-ML110G7(Gentoo)%  echo "source ~/.zsh.d/zshenv" > ~/.zshenv
+ML110G7(Gentoo)% echo "source ~/.zsh.d/zshrc" > ~/.zshrc
+ML110G7(Gentoo)% echo "source ~/.zsh.d/zshenv" > ~/.zshenv
