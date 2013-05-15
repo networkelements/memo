@@ -1,0 +1,51 @@
+//mikutterインストール
+% sudo apt-get install install git git-svn libgtk2.0-dev ruby1.9.3
+
+% sudo gem install bundler
+
+% git svn clone svn://toshia.dip.jp/mikutter
+
+% cd mikutter/trunk
+
+% mkdir .bundle
+
+% sudo nano Gemfile
+source "https://rubygems.org"
+gem 'gtk2'
+
+% bundle install --path .bundle
+
+//起動
+% cd mikutter/trunk && bundle exec ./mikutter.rb 
+
+
+//参考ページ(typoあり)
+Ubuntu に mikutter をインストールする | rb.blog.pasberth.com
+http://rb.blog.pasberth.com/post/23404214443/ubuntu-mikutter
+
+
+//プラグイン
+
+//via名表示できん
+toshia/mikutter-sub-parts-client · GitHub
+https://github.com/toshia/mikutter-sub-parts-client
+
+//なぞ
+penguin2716/mikutter_bookmark · GitHub
+https://github.com/penguin2716/mikutter_bookmark
+
+
+% mkdir -p ~/.mikutter/plugin
+
+% cd ~/.mikutter/plugin
+
+% git clone git://github.com/toshia/mikutter-sub-parts-client.git sub-parts-client
+% mkdir -p ~/.mikutter/plugin; touch ~/.mikutter/plugin/display_requirements.rb
+
+//あってる？
+% git clone git://github.com/penguin2716/mikutter_bookmark.git bookmark
+
+
+//mikutter再起動しても特に反応なかったので（ツイート時刻が表示されるようにはなったが）、
+% mkdir -p ~/mikutter/plugin
+//にしてみても変わらず・・・・
