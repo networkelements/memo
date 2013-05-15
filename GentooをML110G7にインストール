@@ -66,7 +66,6 @@ root@ML110G7:/mnt/gentoo# tar xvjf portage-latest.tar.bz2 -C /mnt/gentoo/usr
 root@ML110G7:/mnt/gentoo# rm stage3-*.tar.bz2* portage-latest.tar.bz2*
 
 
-
 root@ML110G7:/mnt/gentoo# nano -w /mnt/gentoo/etc/portage/make.conf
 // /etc/make.conf
 
@@ -86,15 +85,16 @@ CHOST="x86_64-pc-linux-gnu"
 # These are the USE flags that were used in addition to what is provided by the
 # profile used for building.
 
-
 USE="bindist mmx sse sse2 ssse3 zsh-completion ramfs curl acpi cpio mkinitcpio btrfs-progs mount hddtemp zlib lzo ipv6 -examples"
 #hardened ramfs mkinitcpio busybox cpio mount hddtemp zlib lzo curl acpi
 
-MAKEOPTS="-j3"
+MAKEOPTS="-j3 -l3"
 
 GENTOO_MIRRORS="http://gentoo.channelx.biz/ ftp://ftp.iij.ad.jp/pub/linux/gentoo/ http://ftp.jaist.ac.jp/pub/Linux/Gentoo/ rsync://ftp.jaist.ac.jp/pub/Linux"
 
 SYNC="rsync://rsync5.jp.gentoo.org/gentoo-portage"
+
+LINGUAS="ja"
 
 
 root@ML110G7:/mnt/gentoo# mount -t proc none /mnt/gentoo/proc
