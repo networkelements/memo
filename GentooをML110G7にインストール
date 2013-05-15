@@ -717,3 +717,172 @@ Password:
 
  * After world updates, it is important to remove obsolete packages with
  * emerge --depclean. Refer to `man emerge` for more information.
+
+
+=========================================================================================================================
+
+//修正した？ssh一応使えるようになった
+//その日のTL
+https://twitter.com/bleuscr/status/334697625657958400
+https://twitter.com/bleuscr/status/334699779315597312
+https://twitter.com/kotatsu_mi/status/334700578720600065
+https://twitter.com/cosmo__/status/334700887626899457
+https://twitter.com/cosmo__/status/334700625059274752
+https://twitter.com/yoh2_sdj/status/334709138108055552
+https://twitter.com/yoh2_sdj/status/334717172561633281
+https://twitter.com/kotatsu_mi/status/334730548587159552
+
+ML110G7(Gentoo)% ifconfig
+eno1: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether xx:xx:xx:xx:xx:xx  txqueuelen 1000  (Ethernet)
+
+enp2s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether xx:xx:xx:xx:xx:xx  txqueuelen 1000  (Ethernet)
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+
+
+ML110G7(Gentoo)% rc-update del net.eth0
+ML110G7(Gentoo)% rc-update add net.enp2s0 default
+
+ML110G7(Gentoo)% mv /etc/init.d/net.eth0 /etc/init.d/net.enp2s0
+ mv: can`t stat '/etc/init.d/net.eth0': No such file or directory
+ML110G7(Gentoo)% ln -s net.lo /etc/init.d/net.enp2s0
+ ln: failed to create symbolic link '/etc/init.d/net.enp2s0': File exists
+ML110G7(Gentoo)% export LANG=C LANGUAGE=C LC_ALL=C
+
+ML110G7(Gentoo)% sudo /etc/init.d/net.enp2s0 start
+
+
+ML110G7(Gentoo)% sudo netstat -lnp | grep 22
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      4343/sshd           
+tcp6       0      0 :::22                   :::*                    LISTEN      4343/sshd           
+unix  2      [ ACC ]     STREAM     LISTENING     5822     17053/syslog-ng      /var/run/syslog-ng.ctl
+
+//このあとなぜかsshつながった 鬱だ死にたい
+
+
+//？　i686とか都市伝説では
+Complete Handbook/x86 Architecture - Gentoo Wiki
+http://wiki.gentoo.org/wiki/Complete_Handbook/x86_Architecture
+
+Intel CPUs
+Additional support is available for various Intel CPUs, such as pentium-mmx, pentium2 (including Celeron), pentium3, pentium4, and nocona:
+ [Collapse] File/etc/portage/make.confHigher-level pentium settings
+## (Substitute the pentium-mmx value in CFLAGS with the value you need)
+CHOST="i686-pc-linux-gnu"
+CFLAGS="-march=pentium-mmx -O2 -pipe"
+
+
+
+=========================================================================================================================
+//xmodmapつかおう！（ていあん
+ML110G7(Gentoo)% wget https://raw.github.com/bleuscr/config/master/.Xmodmap -O /home/bsod/.Xmodmap
+
+//ざんねん！X11関係を入れないとxmomap使えないよバーカとのこと　だるいのでやめた
+ML110G7(Gentoo)% xmodmap ~/.Xmodmap
+zsh: command not found: xmodmap
+
+
+//ついでにzshとかの設定も
+ML110G7(Gentoo)% sudo emerge -av git
+ * IMPORTANT: 5 news items need reading for repository 'gentoo'.
+ * Use eselect news to read news items.
+These are the packages that would be merged, in order:
+
+Calculating dependencies... done!
+[ebuild  N     ] virtual/perl-Locale-Maketext-Simple-0.210.0-r2  0 kB
+[ebuild  N     ] virtual/perl-File-Temp-0.220.0-r2  0 kB
+[ebuild  N     ] dev-perl/Net-SSLeay-1.520.0  381 kB
+[ebuild  N     ] dev-libs/libksba-1.3.0  USE="-static-libs" 611 kB
+[ebuild  N     ] dev-libs/libassuan-2.0.3  USE="-static-libs" 517 kB
+[ebuild  N     ] dev-libs/pth-2.0.7-r3  USE="-debug -static-libs" 638 kB
+[ebuild  N     ] app-admin/eselect-pinentry-0.3  0 kB
+[ebuild  N     ] perl-core/version-0.990.100  105 kB
+[ebuild  N     ] perl-core/Test-Harness-3.260.0  288 kB
+[ebuild  N     ] virtual/perl-Package-Constants-0.20.0-r2  0 kB
+[ebuild  N     ] perl-core/Compress-Raw-Bzip2-2.60.0  133 kB
+[ebuild  N     ] perl-core/Compress-Raw-Zlib-2.60.0  231 kB
+[ebuild  N     ] perl-core/Scalar-List-Utils-1.270.0  68 kB
+[ebuild  N     ] virtual/perl-IO-Zlib-1.100.0-r2  0 kB
+[ebuild  N     ] perl-core/Perl-OSType-1.2.0  USE="{-test}" 12 kB
+[ebuild  N     ] perl-core/Module-CoreList-2.800.0  57 kB
+[ebuild  N     ] perl-core/Module-Load-0.240.0  6 kB
+[ebuild  N     ] perl-core/File-Spec-3.400.0  137 kB
+[ebuild  N     ] perl-core/JSON-PP-2.272.0  41 kB
+[ebuild  N     ] perl-core/CPAN-Meta-YAML-0.8.0  31 kB
+[ebuild  N     ] perl-core/ExtUtils-Manifest-1.610.0  29 kB
+[ebuild  N     ] perl-core/ExtUtils-Install-1.540.0  66 kB
+[ebuild  N     ] perl-core/ExtUtils-Command-1.170.0  19 kB
+[ebuild  N     ] perl-core/Test-Simple-0.980.0  105 kB
+[ebuild  N     ] perl-core/IO-1.25  52 kB
+[ebuild  N     ] virtual/perl-libnet-1.220.0-r1  0 kB
+[ebuild  N     ] perl-core/Digest-SHA-5.820.0  43 kB
+[ebuild  N     ] perl-core/MIME-Base64-3.130.0  18 kB
+[ebuild  N     ] virtual/perl-version-0.990.100  0 kB
+[ebuild  N     ] virtual/perl-Scalar-List-Utils-1.270.0  0 kB
+[ebuild  N     ] virtual/perl-File-Spec-3.400.0  0 kB
+[ebuild  N     ] virtual/perl-CPAN-Meta-YAML-0.8.0  0 kB
+[ebuild  N     ] net-misc/curl-7.30.0  USE="ipv6 ssl -adns -idn -kerberos -ldap -metalink -rtmp -ssh -static-libs {-test} -threads" CURL_SSL="openssl -axtls -cyassl -gnutls -nss -polarssl" 2,565 kB
+[ebuild  N     ] virtual/perl-Perl-OSType-1.2.0-r1  0 kB
+[ebuild  N     ] virtual/perl-JSON-PP-2.272.0-r1  0 kB
+[ebuild  N     ] app-crypt/pinentry-0.8.2  USE="ncurses -caps -gtk -qt4 -static" 419 kB
+[ebuild  N     ] virtual/perl-Test-Harness-3.260.0  0 kB
+[ebuild  N     ] virtual/perl-Compress-Raw-Bzip2-2.60.0  0 kB
+[ebuild  N     ] virtual/perl-Compress-Raw-Zlib-2.60.0  0 kB
+[ebuild  N     ] perl-core/Params-Check-0.360.0  12 kB
+[ebuild  N     ] virtual/perl-Module-CoreList-2.800.0  0 kB
+[ebuild  N     ] virtual/perl-Module-Load-0.240.0  0 kB
+[ebuild  N     ] virtual/perl-ExtUtils-Manifest-1.610.0  0 kB
+[ebuild  N     ] virtual/perl-ExtUtils-Install-1.540.0  0 kB
+[ebuild  N     ] virtual/perl-ExtUtils-Command-1.170.0-r3  0 kB
+[ebuild  N     ] virtual/perl-Test-Simple-0.980.0-r2  0 kB
+[ebuild  N     ] virtual/perl-IO-1.25  0 kB
+[ebuild  N     ] virtual/perl-Digest-SHA-5.820.0  0 kB
+[ebuild  N     ] virtual/perl-MIME-Base64-3.130.0-r2  0 kB
+[ebuild  N     ] virtual/perl-Params-Check-0.360.0  0 kB
+[ebuild  N     ] app-crypt/gnupg-2.0.19  USE="bzip2 nls readline -adns -doc -ldap (-selinux) -smartcard -static -usb" 4,090 kB
+[ebuild  N     ] dev-perl/IO-Socket-SSL-1.840.0  USE="-idn" 79 kB
+[ebuild  N     ] perl-core/IO-Compress-2.60.0  238 kB
+[ebuild  N     ] perl-core/Module-Metadata-1.0.11  27 kB
+[ebuild  N     ] perl-core/Parse-CPAN-Meta-1.440.400  8 kB
+[ebuild  N     ] perl-core/CPAN-Meta-Requirements-2.122.0  21 kB
+[ebuild  N     ] perl-core/digest-base-1.170.0  9 kB
+[ebuild  N     ] virtual/perl-Parse-CPAN-Meta-1.440.400  0 kB
+[ebuild  N     ] virtual/perl-Module-Metadata-1.0.11  0 kB
+[ebuild  N     ] dev-perl/Net-SMTP-SSL-1.10.0  2 kB
+[ebuild  N     ] virtual/perl-IO-Compress-2.60.0  0 kB
+[ebuild  N     ] virtual/perl-CPAN-Meta-Requirements-2.122.0  0 kB
+[ebuild  N     ] virtual/perl-digest-base-1.170.0-r1  0 kB
+[ebuild  N     ] perl-core/Archive-Tar-1.900.0  57 kB
+[ebuild  N     ] perl-core/Module-Load-Conditional-0.540.0  13 kB
+[ebuild  N     ] perl-core/Digest-MD5-2.520.0  46 kB
+[ebuild  N     ] virtual/perl-Archive-Tar-1.900.0  0 kB
+[ebuild  N     ] virtual/perl-Module-Load-Conditional-0.540.0  0 kB
+[ebuild  N     ] virtual/perl-Digest-MD5-2.520.0  0 kB
+[ebuild  N     ] dev-perl/Digest-HMAC-1.30.0  8 kB
+[ebuild  N     ] perl-core/IPC-Cmd-0.780.0  27 kB
+[ebuild  N     ] dev-perl/Authen-SASL-2.160.0  USE="-kerberos" 45 kB
+[ebuild  N     ] virtual/perl-IPC-Cmd-0.780.0  0 kB
+[ebuild  N     ] perl-core/ExtUtils-CBuilder-0.280.205  34 kB
+[ebuild  N     ] virtual/perl-ExtUtils-CBuilder-0.280.205  0 kB
+[ebuild  N     ] perl-core/ExtUtils-ParseXS-2.22.05  40 kB
+[ebuild  N     ] virtual/perl-ExtUtils-ParseXS-2.22.05  0 kB
+[ebuild  N     ] perl-core/ExtUtils-MakeMaker-6.640.0  412 kB
+[ebuild  N     ] virtual/perl-ExtUtils-MakeMaker-6.640.0  0 kB
+[ebuild  N     ] perl-core/CPAN-Meta-2.120.921  75 kB
+[ebuild  N     ] virtual/perl-CPAN-Meta-2.120.921  0 kB
+[ebuild  N     ] perl-core/Module-Build-0.400.300  USE="{-test}" 301 kB
+[ebuild  N     ] virtual/perl-Module-Build-0.400.300  0 kB
+[ebuild  N     ] dev-perl/Error-0.170.160  USE="{-test}" 21 kB
+[ebuild  N     ] dev-vcs/git-1.8.1.5  USE="blksha1 curl gpg iconv nls pcre perl python threads webdav -cgi -cvs -doc -emacs -gnome-keyring -gtk -highlight (-ppcsha1) -subversion {-test} -tk -xinetd" 4,722 kB
+
+Total: 85 packages (85 new), Size of downloads: 16,838 kB
+
+Would you like to merge these packages? [Yes/No] yes
+
+
+
+ML110G7(Gentoo)% git clone https://github.com/clear-code/zsh.d.git ~/.zsh.d
+ML110G7(Gentoo)%  echo "source ~/.zsh.d/zshrc" > ~/.zshrc
+ML110G7(Gentoo)%  echo "source ~/.zsh.d/zshenv" > ~/.zshenv
