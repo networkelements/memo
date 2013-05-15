@@ -1,0 +1,844 @@
+//リリースきたーー！
+Hydra - Release nix-1.5.2
+http://hydra.nixos.org/release/nix/nix-1.5.2
+Nix Downloads
+http://nixos.org/nix/download.html
+
+//DLしてインストール
+Deb package for Ubuntu 13.04 Raring (amd64)
+http://hydra.nixos.org/build/4955137/download/1/nix_1.5.2-1_amd64.deb
+
+% sudo nix-channel --add http://t.co/JJbnFcrW6Z 
+% sudo nix-channel --update
+
+//パッケージを探す
+% sudo nix-env -qa emacs
+emacs-23.4
+emacs-24.3
+
+//インストールする
+% sudo nix-env -i emacs-24.3
+installing `emacs-24.3'
+these paths will be fetched (156.07 MiB download, 499.83 MiB unpacked):
+  /nix/store/08y4ic0i2ipnd2jmkgnwmjljqk0la667-atk-2.6.0
+  /nix/store/0fabgj3075kk0llvcgxllkrilf72amns-findutils-4.4.2
+  /nix/store/0j6g69ybrggql3l3xr5sxvh58am62ifd-freetype-2.4.10
+  /nix/store/0ja1ql02bgl21shj8i20nhlschiq6qcs-pixman-0.26.2
+  /nix/store/0jmddg3l4a4cy6lgzy2si90zn9y7ip10-xlibs-wrapper
+  /nix/store/10wxz88rbk89sx9n892xg1zpsz34dqgq-libtiff-3.9.7
+  /nix/store/1d1jkg0qb7ci05dc5chjkz4872zycj24-gnused-4.2.1
+  /nix/store/1h5q6gf6xvhxvm48sjpgh6si688r7agf-gawk-4.0.2
+  /nix/store/1q70dmg7h2jyzsiw87bv0iyvjarv0x2q-libX11-1.5.0
+  /nix/store/2az9fbvnkny6j6dm2w10nbl54rbdzcbb-patch-2.7.1
+  /nix/store/4659qd20ax8s31h64xss7z27n06a0fbg-libXdmcp-1.1.1
+  /nix/store/5112scs30hizb72wdsasndy8gd394cz3-xineramaproto-1.2.1
+  /nix/store/58nr2sd9vykyjwdmyzv3x23zys1ljamg-cairo-1.12.4
+  /nix/store/59w80chnsc8nxyfgxqm3z156z2cvf9nf-pango-1.30.1
+  /nix/store/5bksj615hac3iia46slc9d5akkm7ilw5-openssl-1.0.1e
+  /nix/store/5iwrm38bm14xn2hyjyazxyzcajrkyqyh-attr-2.4.46
+  /nix/store/5wgqhyr36ry7fj75v7rwrm89l2vr67gw-xproto-7.0.23
+  /nix/store/5ynkv0grnzhmachc20waqb3kd34w0d7i-libxcb-1.9
+  /nix/store/6xi74flvcs3944s9khgzic9ar8y3n371-libICE-1.0.8
+  /nix/store/7817ws0qfmgz3dasaxvm2dfl5rz8n1q1-boehm-gc-7.2d
+  /nix/store/7h3pc42vf8bamf069ggd3j6jbpp3mxh5-libXfixes-5.0
+  /nix/store/85c2hl54y8qvci540rqc8w4fy4kg0q3k-nettle-2.5
+  /nix/store/8b7lpf3maaffabwn0a8rl1gg3b6n95y9-libtool-2.4.2
+  /nix/store/92c83msl08gdj9af45n3ggv9c0cfjkd9-zlib-1.2.7
+  /nix/store/989njbbf770sxyqqpyrw2m0cbfdynzbb-gmp-5.0.5
+  /nix/store/9m5npwc6k7c6gwh1hy8chi0naqzv1lv7-guile-2.0.9
+  /nix/store/9nmbbdnxmdqrpfpccahxzgvsfd207ffl-patchelf-0.6
+  /nix/store/9x6dz0ydhhxyb6v8dl27hbi854h58c7s-renderproto-0.11.1
+  /nix/store/a1x5386mw4gcab6ys1kms5ynjczj705z-libSM-1.2.1
+  /nix/store/a57s91n1zdlc59p05z5ywmp5rzaxa2lj-cups-1.5.4
+  /nix/store/a8iv7zabfpa0nfkz4l0w56rks8f5p375-libXinerama-1.1.2
+  /nix/store/c5nj00mbk2fby52zxna7064bxi0zpwa1-xextproto-7.2.1
+  /nix/store/c7q30gk6md2gmqh7p3k7rh5lgz3jfngz-fixesproto-5.0
+  /nix/store/clfzsf6gi7qh5i9c0vks1ifjam47rijn-perl-5.16.2
+  /nix/store/craak8dr1dk2vvdkxnqv7jpid48il63m-inputproto-2.2
+  /nix/store/cv12p8zpy0fp6spirw9ph78byz55r6n0-gnutar-1.26
+  /nix/store/d2qzb3i5yi0hyngi1ahi8sk397x7wvir-dbus-library-1.6.4
+  /nix/store/f6knz12xybxdfpk31ccyz42ryqwfj9qn-texinfo-4.13a
+  /nix/store/fg306sx0fxg9ginnjxk3fm4hzg4mp7rk-kbproto-1.0.6
+  /nix/store/fqag7wqgswq3nwhlmk5sa0n48v86fidl-gnutls-3.1.10
+  /nix/store/fwjl8q5s0ih3ll896ppicz0m5p0d8cc2-ed-1.7
+  /nix/store/gidxbrb58lm5ikfvcqwx7ja2fqjjmifm-gtk+-2.24.14
+  /nix/store/gl6va6lh6cnv27f18wg7m17byqc2qsck-pcre-8.31
+  /nix/store/h4179hg9zwx76sqqwdk28ka23d6q3anl-libungif-4.1.4
+  /nix/store/hi387lq9x38cfwb915vv4b0zdh76wazc-gcc-4.6.3
+  /nix/store/i99lwxcjhkycy71qj8dj2v7kkm4bjshl-linux-headers-3.7.1
+  /nix/store/i9g9yg9cay6j88m42km44pxzfxzd9j6m-fontconfig-2.10.1
+  /nix/store/ipsxbsfbnq0y551cv2670cl9h2n88lcs-xz-5.0.4
+  /nix/store/is8861mqxk9r4g2daj5421cq1hav673x-diffutils-3.2
+  /nix/store/j1zbjxf4wfk5dxmrk2lg5n38gmb03sdm-libxml2-2.9.0
+  /nix/store/jc2zhcwlzs5jjjqcw0wgxc3pkv7x4qqd-readline-6.2
+  /nix/store/jmwpkfbpgzj92y0cggrzqg9nqhalbhab-libXpm-3.5.10
+  /nix/store/jrw95x1nly7xghf5d7kx1xsvl9116b6c-emacs-24.3
+  /nix/store/k0kd4brqjm1017bhyj8rkyy36n0v5kmh-coreutils-8.21
+  /nix/store/k65w3swcdlars7pnb24brssh4vv0fkfw-libjpeg-8d
+  /nix/store/kwn3qx603n06k9fab82kjsnr9ilr33y8-jasper-1.900.1
+  /nix/store/lilqmy3gmg4qy2n5ssh7w1fgf4w2myhq-libunistring-0.9.3
+  /nix/store/lirml4pki0hanrlnnqygrapcalf4x47w-gdk-pixbuf-2.26.1
+  /nix/store/ljas840fwjdllhy80fgb4y8y9vshklpc-libpng-1.5.13
+  /nix/store/lwq714v4dd19b46m6bqlahy9ndnmaws5-libXcomposite-0.4.3
+  /nix/store/m0zapin3i4383sb0y2ijfrhm5m7cca89-libXi-1.6.1
+  /nix/store/m5i57c8m7mwgk45nn2vpxiv53wq57nyl-libXrender-0.9.7
+  /nix/store/m873m4mbk271z4axdn493bngxkdp8jq8-compositeproto-0.4.2
+  /nix/store/m8r7aryfwnfa8y1xzp2k2vfhb03ld2fb-linux-pam-1.1.6
+  /nix/store/m9a13lqpjlbymc7h3iy2hwc02swmp4ay-util-linux-2.22.2
+  /nix/store/ml128hlikbl14q4cwviafpaskskx1a3f-ncurses-5.9
+  /nix/store/mr2883xhpplvy8njddwl83yn4mxk45z5-acl-2.2.51
+  /nix/store/n4gj4yxfb4b7ajmycrx8zv8bmgmpg87k-zlib-1.2.7
+  /nix/store/nlzimzysnjibqhxiykz6j99vv3ja2mj0-libXrandr-1.4.0
+  /nix/store/ny27s7r5fvfw292zgxl6abkwni0c14k6-gnumake-3.82
+  /nix/store/p3s1057wqjqfdj8l056y6qcwlz5kraql-bzip2-1.0.6
+  /nix/store/phh5zlsjdwbcb439blbn1rj0jzfj7jav-cracklib-2.8.16
+  /nix/store/qihqla2a8s253lbnr72gp2kyp1m69fa0-gcc-wrapper-4.6.3
+  /nix/store/r7nbnxilqn16530h76nylzj5y4fg3f51-randrproto-1.4.0
+  /nix/store/s1ifw2i2x0kcisnrs4yyx31m6gv7sysj-gnugrep-2.14
+  /nix/store/sfs2q12x6acls7nxf1alw1x2g5czwvah-expat-2.1.0
+  /nix/store/v2bvk98q66zf3c6avy34glvhsacvl657-libtasn1-2.13
+  /nix/store/vd0jgk4ym0ni182w2k1zmw67ziiyj8xh-libXext-1.3.1
+  /nix/store/wbv45a9cqlgz3abbavqpils022xsi6m2-pkg-config-0.23
+  /nix/store/wfxkya3xcyrvaf2wfha0kj20pgyrm7k2-pcre-8.31
+  /nix/store/xyv6xsdqgi36c94f3zmq1j9diqbijb68-libXau-1.0.7
+  /nix/store/y67jviz0957mzv6mpddyrvfdq2kfxv02-gzip-1.5
+  /nix/store/yrsv31ni4xhj9gg7vz7w77nnam68sq0c-libXt-1.1.3
+  /nix/store/yw62q6acrpjnx2r1zg9bzsn7xld1y00s-bash-4.2-p42
+  /nix/store/yzfw3mpi43d64wwa867iys6k836s3ryd-libusb-1.0.9
+  /nix/store/yzj6p5f7iyh247pwxrg97y3klm6d0cni-python-2.7.3
+  /nix/store/z86xjs8vn7dgj1fvi418dcbm9xlj6rl5-glib-2.34.0
+  /nix/store/zcfga70gjaxs9cvs5akkx0b0dhqsf2k6-libffi-3.0.13
+  /nix/store/zlkc3mnixmkjccq841i5ir7cl4l780hi-binutils-2.23.1
+  /nix/store/zpr8jdx10napidkyz62f3nzl5fm87jyr-glibc-2.17
+  /nix/store/zrzqdpab4q2gaa37adfg4apy2dfj695n-libXft-2.3.1
+fetching path `/nix/store/5wgqhyr36ry7fj75v7rwrm89l2vr67gw-xproto-7.0.23'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0jza1mp0iyk16iyn5i4a1kc5pj2f8apbq4qz6y81357z5yllbx49.nar.bz2’ to ‘/nix/store/5wgqhyr36ry7fj75v7rwrm89l2vr67gw-xproto-7.0.23’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  147k  100  147k    0     0  66616      0  0:00:02  0:00:02 --:--:-- 67029
+
+fetching path `/nix/store/fg306sx0fxg9ginnjxk3fm4hzg4mp7rk-kbproto-1.0.6'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/12drnbnvixqr9idw00bgimi9bn3nfv0sp4j4c0im89952745r78k.nar.bz2’ to ‘/nix/store/fg306sx0fxg9ginnjxk3fm4hzg4mp7rk-kbproto-1.0.6’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  122k  100  122k    0     0  54539      0  0:00:02  0:00:02 --:--:-- 54818
+
+fetching path `/nix/store/i99lwxcjhkycy71qj8dj2v7kkm4bjshl-linux-headers-3.7.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0ccfipqjn4xcxwy8bhxyaj50mfi33xckdk7df91xmj2yphklmabv.nar.bz2’ to ‘/nix/store/i99lwxcjhkycy71qj8dj2v7kkm4bjshl-linux-headers-3.7.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  702k  100  702k    0     0  99525      0  0:00:07  0:00:07 --:--:--  116k
+
+fetching path `/nix/store/9x6dz0ydhhxyb6v8dl27hbi854h58c7s-renderproto-0.11.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1ybb37wjp859s43k9bn9cjn47kc4g9a6ik5h1qk2spvn52ddmkv8.nar.bz2’ to ‘/nix/store/9x6dz0ydhhxyb6v8dl27hbi854h58c7s-renderproto-0.11.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 15208  100 15208    0     0  10140      0  0:00:01  0:00:01 --:--:-- 18061
+
+fetching path `/nix/store/zpr8jdx10napidkyz62f3nzl5fm87jyr-glibc-2.17'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/05d07v2b5d4y1lb5yhj79c5smf3vk9y82mk7janlpjwvnmdjkd3n.nar.bz2’ to ‘/nix/store/zpr8jdx10napidkyz62f3nzl5fm87jyr-glibc-2.17’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 10.0M  100 10.0M    0     0  89976      0  0:01:57  0:01:57 --:--:--  122k
+
+fetching path `/nix/store/c5nj00mbk2fby52zxna7064bxi0zpwa1-xextproto-7.2.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1laf0i3ma9l3zh0rhzfkzivz2pb0c0s4rdrhdv98gj1qn341d9g4.nar.bz2’ to ‘/nix/store/c5nj00mbk2fby52zxna7064bxi0zpwa1-xextproto-7.2.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 97027  100 97027    0     0  48176      0  0:00:02  0:00:02 --:--:-- 48440
+
+fetching path `/nix/store/zcfga70gjaxs9cvs5akkx0b0dhqsf2k6-libffi-3.0.13'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1n3y80gp7qcnghj47dz97p4cql9as1cny480b4nfvvn4j8547fbj.nar.bz2’ to ‘/nix/store/zcfga70gjaxs9cvs5akkx0b0dhqsf2k6-libffi-3.0.13’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 32231  100 32231    0     0  35808      0 --:--:-- --:--:-- --:--:-- 36173
+
+fetching path `/nix/store/fwjl8q5s0ih3ll896ppicz0m5p0d8cc2-ed-1.7'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1wgw2ylv34fa5rr96nq34m0rciff7lr4ipdiq754hyq95d19q9nn.nar.bz2’ to ‘/nix/store/fwjl8q5s0ih3ll896ppicz0m5p0d8cc2-ed-1.7’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 45264  100 45264    0     0  38781      0  0:00:01  0:00:01 --:--:-- 39189
+
+fetching path `/nix/store/4659qd20ax8s31h64xss7z27n06a0fbg-libXdmcp-1.1.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1ip16d1l72ly6lhfavkvps7kqp7mp5s768nwvs4c2csmj7vvl187.nar.bz2’ to ‘/nix/store/4659qd20ax8s31h64xss7z27n06a0fbg-libXdmcp-1.1.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 26707  100 26707    0     0  30721      0 --:--:-- --:--:-- --:--:-- 31383
+
+fetching path `/nix/store/xyv6xsdqgi36c94f3zmq1j9diqbijb68-libXau-1.0.7'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/098djm994bp4mx3mzwy5aaibj0wjzvpdnwxw0jb3y1ash3kv78sx.nar.bz2’ to ‘/nix/store/xyv6xsdqgi36c94f3zmq1j9diqbijb68-libXau-1.0.7’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 10983  100 10983    0     0  17360      0 --:--:-- --:--:-- --:--:-- 17685
+
+fetching path `/nix/store/1d1jkg0qb7ci05dc5chjkz4872zycj24-gnused-4.2.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0l7914dkw348yxs6vmhds23n62vnmqzd6n9kcyvh7517lsgdaib7.nar.bz2’ to ‘/nix/store/1d1jkg0qb7ci05dc5chjkz4872zycj24-gnused-4.2.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  160k  100  160k    0     0  62485      0  0:00:02  0:00:02 --:--:-- 62709
+
+fetching path `/nix/store/5ynkv0grnzhmachc20waqb3kd34w0d7i-libxcb-1.9'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/04iawwwn404capghzka1isd40vnh4vhgrl4m9qr10wwmdc19mfni.nar.bz2’ to ‘/nix/store/5ynkv0grnzhmachc20waqb3kd34w0d7i-libxcb-1.9’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  820k  100  820k    0     0  70368      0  0:00:11  0:00:11 --:--:-- 48671
+
+fetching path `/nix/store/1h5q6gf6xvhxvm48sjpgh6si688r7agf-gawk-4.0.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/154916ilbfn1r7lf3ikshg3gr2632qm94q008d71zaasy4cpbi51.nar.bz2’ to ‘/nix/store/1h5q6gf6xvhxvm48sjpgh6si688r7agf-gawk-4.0.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1323k  100 1323k    0     0  68757      0  0:00:19  0:00:19 --:--:-- 68427
+
+fetching path `/nix/store/1q70dmg7h2jyzsiw87bv0iyvjarv0x2q-libX11-1.5.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/12znnl8r981p8fg7sbnkiv6w5vxagcrh5ypc1fbvj5v7q878lmsn.nar.bz2’ to ‘/nix/store/1q70dmg7h2jyzsiw87bv0iyvjarv0x2q-libX11-1.5.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1775k  100 1775k    0     0  72067      0  0:00:25  0:00:25 --:--:-- 77092
+
+fetching path `/nix/store/2az9fbvnkny6j6dm2w10nbl54rbdzcbb-patch-2.7.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/09p4qjir8vfyzw7fx0vk0hi3bq0s32b89izp4szcdjdp1lsazgvy.nar.bz2’ to ‘/nix/store/2az9fbvnkny6j6dm2w10nbl54rbdzcbb-patch-2.7.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 91236  100 91236    0     0  42437      0  0:00:02  0:00:02 --:--:-- 42613
+
+fetching path `/nix/store/6xi74flvcs3944s9khgzic9ar8y3n371-libICE-1.0.8'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1nr773pyicwpjw6sry7s5mig3krrk20xbm4p1g97zmjh39x8z9wm.nar.bz2’ to ‘/nix/store/6xi74flvcs3944s9khgzic9ar8y3n371-libICE-1.0.8’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 80853  100 80853    0     0  39609      0  0:00:02  0:00:02 --:--:-- 39829
+
+fetching path `/nix/store/cv12p8zpy0fp6spirw9ph78byz55r6n0-gnutar-1.26'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/08mqv5yvzfp4vc0z2g371fqw9l6cfbf3f6kj8fyx2yqymdsrj3na.nar.bz2’ to ‘/nix/store/cv12p8zpy0fp6spirw9ph78byz55r6n0-gnutar-1.26’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  645k  100  645k    0     0  73222      0  0:00:09  0:00:09 --:--:-- 95240
+
+fetching path `/nix/store/ipsxbsfbnq0y551cv2670cl9h2n88lcs-xz-5.0.4'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/01d2l2kaabinlph0jrxmak3841s8hhvsx57ladar3jwaxmhji5xb.nar.bz2’ to ‘/nix/store/ipsxbsfbnq0y551cv2670cl9h2n88lcs-xz-5.0.4’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  254k  100  254k    0     0  49721      0  0:00:05  0:00:05 --:--:-- 55630
+
+fetching path `/nix/store/k65w3swcdlars7pnb24brssh4vv0fkfw-libjpeg-8d'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/12pdmyw08kh6pjij55yb4p8qk5mi3wh7jccpw7fww3x4sz1qq4jp.nar.bz2’ to ‘/nix/store/k65w3swcdlars7pnb24brssh4vv0fkfw-libjpeg-8d’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  186k  100  186k    0     0  49357      0  0:00:03  0:00:03 --:--:-- 49487
+
+fetching path `/nix/store/m5i57c8m7mwgk45nn2vpxiv53wq57nyl-libXrender-0.9.7'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/02x1pb0c0lkdla41y05ff4lm3anj7fig82xpnh2scazbx2q3kgvg.nar.bz2’ to ‘/nix/store/m5i57c8m7mwgk45nn2vpxiv53wq57nyl-libXrender-0.9.7’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 25718  100 25718    0     0  28428      0 --:--:-- --:--:-- --:--:-- 28799
+
+fetching path `/nix/store/kwn3qx603n06k9fab82kjsnr9ilr33y8-jasper-1.900.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0r98jgh4ahi29gbcbi3x62x3w374c3rzlylb1chsxqqz3dy8j6dn.nar.bz2’ to ‘/nix/store/kwn3qx603n06k9fab82kjsnr9ilr33y8-jasper-1.900.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  185k  100  185k    0     0  45153      0  0:00:04  0:00:04 --:--:-- 48690
+
+fetching path `/nix/store/n4gj4yxfb4b7ajmycrx8zv8bmgmpg87k-zlib-1.2.7'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0sf8ibzf2bsgy12r9ns2imlizqq4fagsb8hnh0r5kc6qz0xwana0.nar.bz2’ to ‘/nix/store/n4gj4yxfb4b7ajmycrx8zv8bmgmpg87k-zlib-1.2.7’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  102k  100  102k    0     0  40678      0  0:00:02  0:00:02 --:--:-- 40861
+
+fetching path `/nix/store/ny27s7r5fvfw292zgxl6abkwni0c14k6-gnumake-3.82'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0gnvb7j735g4iyrv8ss8j7yf096wwby5pvzky47y5cly9labxsb5.nar.bz2’ to ‘/nix/store/ny27s7r5fvfw292zgxl6abkwni0c14k6-gnumake-3.82’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  383k  100  383k    0     0  57309      0  0:00:06  0:00:06 --:--:-- 67498
+
+fetching path `/nix/store/p3s1057wqjqfdj8l056y6qcwlz5kraql-bzip2-1.0.6'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1m2285naqkzr5azvqp06wb60n2h8mhbhw4iz05wshqimwbcw89vg.nar.bz2’ to ‘/nix/store/p3s1057wqjqfdj8l056y6qcwlz5kraql-bzip2-1.0.6’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 80316  100 80316    0     0  40200      0  0:00:01  0:00:01 --:--:-- 40400
+
+fetching path `/nix/store/sfs2q12x6acls7nxf1alw1x2g5czwvah-expat-2.1.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0r3iqpl9047gmq3ad1gkxdvy0gc5ypn7x56cx3wdfwa9qi3lp72w.nar.bz2’ to ‘/nix/store/sfs2q12x6acls7nxf1alw1x2g5czwvah-expat-2.1.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 95095  100 95095    0     0  39902      0  0:00:02  0:00:02 --:--:-- 40124
+
+fetching path `/nix/store/v2bvk98q66zf3c6avy34glvhsacvl657-libtasn1-2.13'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0was80cam1651zfdvlxxjcry8h6gx7rj3q4csgfjsfdx5xdrv6vz.nar.bz2’ to ‘/nix/store/v2bvk98q66zf3c6avy34glvhsacvl657-libtasn1-2.13’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   98k  100   98k    0     0  42355      0  0:00:02  0:00:02 --:--:-- 42631
+
+fetching path `/nix/store/d2qzb3i5yi0hyngi1ahi8sk397x7wvir-dbus-library-1.6.4'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0p2g0nr5nzin140hx2plxqxaykmfn1pmaabszii6h9sbpbgmlrjm.nar.bz2’ to ‘/nix/store/d2qzb3i5yi0hyngi1ahi8sk397x7wvir-dbus-library-1.6.4’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  608k  100  608k    0     0  66111      0  0:00:09  0:00:09 --:--:-- 84280
+
+fetching path `/nix/store/wbv45a9cqlgz3abbavqpils022xsi6m2-pkg-config-0.23'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/17rlhs76nym1sj560gjihln9slw4p20lmzb25bppz2gmvramkqrh.nar.bz2’ to ‘/nix/store/wbv45a9cqlgz3abbavqpils022xsi6m2-pkg-config-0.23’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 67409  100 67409    0     0  38796      0  0:00:01  0:00:01 --:--:-- 39100
+
+fetching path `/nix/store/y67jviz0957mzv6mpddyrvfdq2kfxv02-gzip-1.5'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1cnxzbcgz10qnafbh9c848x9gzwmrwgmpqapn1ssn7d1zfy2qmrx.nar.bz2’ to ‘/nix/store/y67jviz0957mzv6mpddyrvfdq2kfxv02-gzip-1.5’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 90167  100 90167    0     0  45011      0  0:00:02  0:00:02 --:--:-- 45173
+
+fetching path `/nix/store/yw62q6acrpjnx2r1zg9bzsn7xld1y00s-bash-4.2-p42'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1p34wi5zyclwjlx1vlzgajncs4xz3l1gp2r4yw341y42k8hqpm5a.nar.bz2’ to ‘/nix/store/yw62q6acrpjnx2r1zg9bzsn7xld1y00s-bash-4.2-p42’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  780k  100  780k    0     0  83427      0  0:00:09  0:00:09 --:--:--  102k
+
+fetching path `/nix/store/vd0jgk4ym0ni182w2k1zmw67ziiyj8xh-libXext-1.3.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1nylz5rraf4iq1nkh2c794x8j54x89k71x78kn2bpz331w94gxwy.nar.bz2’ to ‘/nix/store/vd0jgk4ym0ni182w2k1zmw67ziiyj8xh-libXext-1.3.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  109k  100  109k    0     0  49295      0  0:00:02  0:00:02 --:--:-- 49490
+
+fetching path `/nix/store/0j6g69ybrggql3l3xr5sxvh58am62ifd-freetype-2.4.10'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1a0h5n8c4x99zfwxhmp97nviy1w6cnbfnwvpcx4fj7hkg9rzq496.nar.bz2’ to ‘/nix/store/0j6g69ybrggql3l3xr5sxvh58am62ifd-freetype-2.4.10’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  402k  100  402k    0     0  45302      0  0:00:09  0:00:09 --:--:-- 50537
+
+fetching path `/nix/store/h4179hg9zwx76sqqwdk28ka23d6q3anl-libungif-4.1.4'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0ab7mm3a2rrf4b5banrj8kw7959bf8vsdrf4hng5l3p1mghw4y3w.nar.bz2’ to ‘/nix/store/h4179hg9zwx76sqqwdk28ka23d6q3anl-libungif-4.1.4’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  104k  100  104k    0     0  36014      0  0:00:02  0:00:02 --:--:-- 36280
+
+fetching path `/nix/store/i9g9yg9cay6j88m42km44pxzfxzd9j6m-fontconfig-2.10.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1ispzhxqvi0gdy1gpp8hih1y2pvps8z3ll3lm92xg4yizjyix1l6.nar.bz2’ to ‘/nix/store/i9g9yg9cay6j88m42km44pxzfxzd9j6m-fontconfig-2.10.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  153k  100  153k    0     0  44263      0  0:00:03  0:00:03 --:--:-- 44376
+
+fetching path `/nix/store/j1zbjxf4wfk5dxmrk2lg5n38gmb03sdm-libxml2-2.9.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1jmfkvl18mmg1cg7yw8hp83vanrakfchj28b69dy39960dl257if.nar.bz2’ to ‘/nix/store/j1zbjxf4wfk5dxmrk2lg5n38gmb03sdm-libxml2-2.9.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1314k  100 1314k    0     0  58468      0  0:00:23  0:00:23 --:--:-- 45060
+
+fetching path `/nix/store/ljas840fwjdllhy80fgb4y8y9vshklpc-libpng-1.5.13'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1x3q1wjm5f3kv42srah8a24256yxlaajbqfwg9zc73gs5d78z96y.nar.bz2’ to ‘/nix/store/ljas840fwjdllhy80fgb4y8y9vshklpc-libpng-1.5.13’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  195k  100  195k    0     0  49936      0  0:00:04  0:00:04 --:--:-- 50178
+
+fetching path `/nix/store/ml128hlikbl14q4cwviafpaskskx1a3f-ncurses-5.9'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0ff5af99731b5mcqqxvighzbr45vy916bz56hafwfxjyvb6jdhj4.nar.bz2’ to ‘/nix/store/ml128hlikbl14q4cwviafpaskskx1a3f-ncurses-5.9’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1154k  100 1154k    0     0  72927      0  0:00:16  0:00:16 --:--:-- 86227
+
+fetching path `/nix/store/zrzqdpab4q2gaa37adfg4apy2dfj695n-libXft-2.3.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1d2r13c28h0ywg2xp8aawfsvqz2fnkrynp08rb4szf8w0csrs17s.nar.bz2’ to ‘/nix/store/zrzqdpab4q2gaa37adfg4apy2dfj695n-libXft-2.3.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 54173  100 54173    0     0  36794      0  0:00:01  0:00:01 --:--:-- 37883
+
+fetching path `/nix/store/f6knz12xybxdfpk31ccyz42ryqwfj9qn-texinfo-4.13a'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1iqhlg0hxhxh3c2hp7zcs8rim6yq9agsw1f18d1mc54a4ybm2qcw.nar.bz2’ to ‘/nix/store/f6knz12xybxdfpk31ccyz42ryqwfj9qn-texinfo-4.13a’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  757k  100  757k    0     0  84730      0  0:00:09  0:00:09 --:--:--  104k
+
+fetching path `/nix/store/0ja1ql02bgl21shj8i20nhlschiq6qcs-pixman-0.26.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1jhx1p3v67229gjs2jyg03pypzhv8w1d7p7x9nn2lpyb171xrrgj.nar.bz2’ to ‘/nix/store/0ja1ql02bgl21shj8i20nhlschiq6qcs-pixman-0.26.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  231k  100  231k    0     0  63588      0  0:00:03  0:00:03 --:--:-- 63807
+
+fetching path `/nix/store/yzfw3mpi43d64wwa867iys6k836s3ryd-libusb-1.0.9'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0irqy27vwc044h4gvxqnz7ka7jws4mwa1ikydnffhi0bx94xx8g9.nar.bz2’ to ‘/nix/store/yzfw3mpi43d64wwa867iys6k836s3ryd-libusb-1.0.9’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 42464  100 42464    0     0  36717      0  0:00:01  0:00:01 --:--:-- 37086
+
+fetching path `/nix/store/92c83msl08gdj9af45n3ggv9c0cfjkd9-zlib-1.2.7'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/02yck07l8mp0s534h5bx8x0mvdxkjibjjhxw1y16hx0wv7bcsd9f.nar.bz2’ to ‘/nix/store/92c83msl08gdj9af45n3ggv9c0cfjkd9-zlib-1.2.7’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  100k  100  100k    0     0  51225      0  0:00:02  0:00:02 --:--:-- 51710
+
+fetching path `/nix/store/5iwrm38bm14xn2hyjyazxyzcajrkyqyh-attr-2.4.46'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1vb2733ci5a5b1p3dng4az7rhg5xrgr3xyj9hlzil25vykzxqrr3.nar.bz2’ to ‘/nix/store/5iwrm38bm14xn2hyjyazxyzcajrkyqyh-attr-2.4.46’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 87171  100 87171    0     0  49137      0  0:00:01  0:00:01 --:--:-- 49416
+
+fetching path `/nix/store/hi387lq9x38cfwb915vv4b0zdh76wazc-gcc-4.6.3'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1hj5y484sm93w5ibd2ykkpihn24az6r41ppdhs26mv5293pw5ca7.nar.bz2’ to ‘/nix/store/hi387lq9x38cfwb915vv4b0zdh76wazc-gcc-4.6.3’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 25.0M  100 25.0M    0     0   220k      0  0:01:56  0:01:56 --:--:--  171k
+
+fetching path `/nix/store/zlkc3mnixmkjccq841i5ir7cl4l780hi-binutils-2.23.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0v16cppapr19ca5b6a4bjhqfnw8d5qzr4y4illhsx0x85cjvjbqj.nar.bz2’ to ‘/nix/store/zlkc3mnixmkjccq841i5ir7cl4l780hi-binutils-2.23.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 8774k  100 8774k    0     0   186k      0  0:00:46  0:00:46 --:--:--  284k
+
+fetching path `/nix/store/10wxz88rbk89sx9n892xg1zpsz34dqgq-libtiff-3.9.7'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1ap5ih0mh9m38flyp489qfyagn5hx4jc11al2yx6kq1rppck23h4.nar.bz2’ to ‘/nix/store/10wxz88rbk89sx9n892xg1zpsz34dqgq-libtiff-3.9.7’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  810k  100  810k    0     0   143k      0  0:00:05  0:00:05 --:--:--  168k
+
+fetching path `/nix/store/9nmbbdnxmdqrpfpccahxzgvsfd207ffl-patchelf-0.6'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/183isyw5pv3z67pi9dwg58hapi5ijs79qzz56vdij6lvl5bisxz8.nar.bz2’ to ‘/nix/store/9nmbbdnxmdqrpfpccahxzgvsfd207ffl-patchelf-0.6’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 44811  100 44811    0     0  36222      0  0:00:01  0:00:01 --:--:-- 36640
+
+fetching path `/nix/store/wfxkya3xcyrvaf2wfha0kj20pgyrm7k2-pcre-8.31'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0ivl19c3p9ikmixwjzx8hf5q64hai7y11c7ksxxbxw7birbwnibi.nar.bz2’ to ‘/nix/store/wfxkya3xcyrvaf2wfha0kj20pgyrm7k2-pcre-8.31’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  636k  100  636k    0     0   131k      0  0:00:04  0:00:04 --:--:--  149k
+
+fetching path `/nix/store/989njbbf770sxyqqpyrw2m0cbfdynzbb-gmp-5.0.5'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1jvdnwj4j6i86rrw73myq9a2npyvr2d331j4fvcxcsqxiy7cjnch.nar.bz2’ to ‘/nix/store/989njbbf770sxyqqpyrw2m0cbfdynzbb-gmp-5.0.5’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  382k  100  382k    0     0   121k      0  0:00:03  0:00:03 --:--:--  121k
+
+fetching path `/nix/store/mr2883xhpplvy8njddwl83yn4mxk45z5-acl-2.2.51'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0ira0k5gr0cr6wcjpz9l4iapxja6w68f64gkakmgbz6mxdc98wwz.nar.bz2’ to ‘/nix/store/mr2883xhpplvy8njddwl83yn4mxk45z5-acl-2.2.51’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  146k  100  146k    0     0  89772      0  0:00:01  0:00:01 --:--:-- 90341
+
+fetching path `/nix/store/85c2hl54y8qvci540rqc8w4fy4kg0q3k-nettle-2.5'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0fgnv6xwkbdb1rn0kw73jazafqji2lv9hzjhl8k6y4ilkr4dkl3k.nar.bz2’ to ‘/nix/store/85c2hl54y8qvci540rqc8w4fy4kg0q3k-nettle-2.5’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  248k  100  248k    0     0   105k      0  0:00:02  0:00:02 --:--:--  105k
+
+fetching path `/nix/store/k0kd4brqjm1017bhyj8rkyy36n0v5kmh-coreutils-8.21'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/148l2nclr1f2mwbsyvbhryfsyw0kikbgjzlzbpf5d4gqbzfvi5am.nar.bz2’ to ‘/nix/store/k0kd4brqjm1017bhyj8rkyy36n0v5kmh-coreutils-8.21’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 3678k  100 3678k    0     0   205k      0  0:00:17  0:00:17 --:--:--  264k
+
+fetching path `/nix/store/7817ws0qfmgz3dasaxvm2dfl5rz8n1q1-boehm-gc-7.2d'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/10rqnayncy40n7bj5s60c4i9ql4sq735g4a5j6mc1y5w7i4maha2.nar.bz2’ to ‘/nix/store/7817ws0qfmgz3dasaxvm2dfl5rz8n1q1-boehm-gc-7.2d’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  247k  100  247k    0     0   108k      0  0:00:02  0:00:02 --:--:--  108k
+
+fetching path `/nix/store/0fabgj3075kk0llvcgxllkrilf72amns-findutils-4.4.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1yvh6pl8n2ns58i09cfazxp5dfdqhv0dpn3xhj6wwi427flapc6g.nar.bz2’ to ‘/nix/store/0fabgj3075kk0llvcgxllkrilf72amns-findutils-4.4.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  498k  100  498k    0     0   126k      0  0:00:03  0:00:03 --:--:--  126k
+
+fetching path `/nix/store/is8861mqxk9r4g2daj5421cq1hav673x-diffutils-3.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/00agbxk2cbghqkvd3s6vzvzakffrvn8ghrx35rzmq9g9617hqrwd.nar.bz2’ to ‘/nix/store/is8861mqxk9r4g2daj5421cq1hav673x-diffutils-3.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  264k  100  264k    0     0   112k      0  0:00:02  0:00:02 --:--:--  112k
+
+fetching path `/nix/store/qihqla2a8s253lbnr72gp2kyp1m69fa0-gcc-wrapper-4.6.3'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1x4dc6jyhn9620hb4mf45av7mr84jf7qclkyqzmb3hm52hkj40r1.nar.bz2’ to ‘/nix/store/qihqla2a8s253lbnr72gp2kyp1m69fa0-gcc-wrapper-4.6.3’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  4458  100  4458    0     0   7521      0 --:--:-- --:--:-- --:--:--  7672
+
+fetching path `/nix/store/clfzsf6gi7qh5i9c0vks1ifjam47rijn-perl-5.16.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/01z1nwdk323ddrng1453qn92wis96gm5rcnf0vhwndhda8i2jg98.nar.bz2’ to ‘/nix/store/clfzsf6gi7qh5i9c0vks1ifjam47rijn-perl-5.16.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 14.9M  100 14.9M    0     0   337k      0  0:00:45  0:00:45 --:--:--  516k
+
+fetching path `/nix/store/gl6va6lh6cnv27f18wg7m17byqc2qsck-pcre-8.31'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0f4msm054xakjkn8bdz7p9qg8cw2nwxd0r0hichs8qxdg464s6rp.nar.bz2’ to ‘/nix/store/gl6va6lh6cnv27f18wg7m17byqc2qsck-pcre-8.31’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  636k  100  636k    0     0   175k      0  0:00:03  0:00:03 --:--:--  177k
+
+fetching path `/nix/store/5bksj615hac3iia46slc9d5akkm7ilw5-openssl-1.0.1e'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1cg39g7n4gf4prlgdkpkacbrlrkcbpy5r9yzp4ssk2dh09bds2yx.nar.bz2’ to ‘/nix/store/5bksj615hac3iia46slc9d5akkm7ilw5-openssl-1.0.1e’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2889k  100 2889k    0     0   258k      0  0:00:11  0:00:11 --:--:--  311k
+
+fetching path `/nix/store/s1ifw2i2x0kcisnrs4yyx31m6gv7sysj-gnugrep-2.14'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/04by4ssw6ycrysiv7dmh6ff7yhdfbwrir3v8ljr8sd91nnh7g7wk.nar.bz2’ to ‘/nix/store/s1ifw2i2x0kcisnrs4yyx31m6gv7sysj-gnugrep-2.14’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  265k  100  265k    0     0   130k      0  0:00:02  0:00:02 --:--:--  130k
+
+fetching path `/nix/store/yzj6p5f7iyh247pwxrg97y3klm6d0cni-python-2.7.3'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/03qdcd497hmpqc0h7z68iawp6f2v5jzidiiyjx8acr94rdjniw9g.nar.bz2’ to ‘/nix/store/yzj6p5f7iyh247pwxrg97y3klm6d0cni-python-2.7.3’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 9049k  100 9049k    0     0   231k      0  0:00:39  0:00:39 --:--:--  319k
+
+fetching path `/nix/store/phh5zlsjdwbcb439blbn1rj0jzfj7jav-cracklib-2.8.16'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1358ryaf4knrlmbwnff4hsly49xkh560vdqv6hn70swll08rybi4.nar.bz2’ to ‘/nix/store/phh5zlsjdwbcb439blbn1rj0jzfj7jav-cracklib-2.8.16’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  212k  100  212k    0     0   100k      0  0:00:02  0:00:02 --:--:--  100k
+
+fetching path `/nix/store/z86xjs8vn7dgj1fvi418dcbm9xlj6rl5-glib-2.34.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/051j1nbbvfd3wnbi8h8j0illjcg0zhmxkxa4ny9ma99air076wqx.nar.bz2’ to ‘/nix/store/z86xjs8vn7dgj1fvi418dcbm9xlj6rl5-glib-2.34.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2612k  100 2612k    0     0   195k      0  0:00:13  0:00:13 --:--:--  237k
+
+fetching path `/nix/store/m8r7aryfwnfa8y1xzp2k2vfhb03ld2fb-linux-pam-1.1.6'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1a9qyfvw1hrx1gr1h3rkz1l03ivwran682by5z1wjgziydwnnn3p.nar.bz2’ to ‘/nix/store/m8r7aryfwnfa8y1xzp2k2vfhb03ld2fb-linux-pam-1.1.6’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  544k  100  544k    0     0   147k      0  0:00:03  0:00:03 --:--:--  148k
+
+fetching path `/nix/store/08y4ic0i2ipnd2jmkgnwmjljqk0la667-atk-2.6.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1g7q0ly50ddjd7bm49ysrm3mhbbcb6k8jckzma251ssdnnix1nha.nar.bz2’ to ‘/nix/store/08y4ic0i2ipnd2jmkgnwmjljqk0la667-atk-2.6.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 77218  100 77218    0     0  64712      0  0:00:01  0:00:01 --:--:-- 65273
+
+fetching path `/nix/store/58nr2sd9vykyjwdmyzv3x23zys1ljamg-cairo-1.12.4'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/08r7g8wsgdyyii5lwisms6sy34j5xgnapg9isk1xzzjlfa0vnbzp.nar.bz2’ to ‘/nix/store/58nr2sd9vykyjwdmyzv3x23zys1ljamg-cairo-1.12.4’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  666k  100  666k    0     0   151k      0  0:00:04  0:00:04 --:--:--  152k
+
+fetching path `/nix/store/a57s91n1zdlc59p05z5ywmp5rzaxa2lj-cups-1.5.4'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1q3416jrw89gi88ck209khxs5z1yrf8ib1cri3vyy5mgwak6spi0.nar.bz2’ to ‘/nix/store/a57s91n1zdlc59p05z5ywmp5rzaxa2lj-cups-1.5.4’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 7966k  100 7966k    0     0   265k      0  0:00:29  0:00:29 --:--:--  365k
+
+fetching path `/nix/store/lirml4pki0hanrlnnqygrapcalf4x47w-gdk-pixbuf-2.26.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/10q400i4prwjj24nfj9dndbandw44ff2rpj7329f5k25yak0hj3x.nar.bz2’ to ‘/nix/store/lirml4pki0hanrlnnqygrapcalf4x47w-gdk-pixbuf-2.26.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  556k  100  556k    0     0   142k      0  0:00:03  0:00:03 --:--:--  142k
+
+fetching path `/nix/store/m9a13lqpjlbymc7h3iy2hwc02swmp4ay-util-linux-2.22.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/08xvpm50xbrz8x1xrblcp0byxxn3dbjwz1yisl6yrs4zdmfy7337.nar.bz2’ to ‘/nix/store/m9a13lqpjlbymc7h3iy2hwc02swmp4ay-util-linux-2.22.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2144k  100 2144k    0     0   199k      0  0:00:10  0:00:10 --:--:--  235k
+
+fetching path `/nix/store/jc2zhcwlzs5jjjqcw0wgxc3pkv7x4qqd-readline-6.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/15vm3vmfg5n54kypbljzy9cphjcvcxpxypjc5xixk8jbfcnl2bjq.nar.bz2’ to ‘/nix/store/jc2zhcwlzs5jjjqcw0wgxc3pkv7x4qqd-readline-6.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  355k  100  355k    0     0   124k      0  0:00:02  0:00:02 --:--:--  124k
+
+fetching path `/nix/store/a1x5386mw4gcab6ys1kms5ynjczj705z-libSM-1.2.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/06f9qjaizb43n0sgyx46sq210c311bn6k0r2pdnpvf4zbv4bcdic.nar.bz2’ to ‘/nix/store/a1x5386mw4gcab6ys1kms5ynjczj705z-libSM-1.2.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 45055  100 45055    0     0  39317      0  0:00:01  0:00:01 --:--:-- 39977
+
+fetching path `/nix/store/8b7lpf3maaffabwn0a8rl1gg3b6n95y9-libtool-2.4.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/11j022v0y06gmpk9h2hxr9grz66fxxnvvmacqma10g8i2dbsfpzl.nar.bz2’ to ‘/nix/store/8b7lpf3maaffabwn0a8rl1gg3b6n95y9-libtool-2.4.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  472k  100  472k    0     0   140k      0  0:00:03  0:00:03 --:--:--  141k
+
+fetching path `/nix/store/yrsv31ni4xhj9gg7vz7w77nnam68sq0c-libXt-1.1.3'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0wjia32s4yajnfdjq6lfygf0s2q2gxscivq1rpimqvy39lb5ayv6.nar.bz2’ to ‘/nix/store/yrsv31ni4xhj9gg7vz7w77nnam68sq0c-libXt-1.1.3’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  574k  100  574k    0     0   145k      0  0:00:03  0:00:03 --:--:--  145k
+
+fetching path `/nix/store/lilqmy3gmg4qy2n5ssh7w1fgf4w2myhq-libunistring-0.9.3'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1nagks5ffq715aal1am4gfarh047p673f9yc1ypjdk62rjdlrx9l.nar.bz2’ to ‘/nix/store/lilqmy3gmg4qy2n5ssh7w1fgf4w2myhq-libunistring-0.9.3’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  524k  100  524k    0     0   145k      0  0:00:03  0:00:03 --:--:--  146k
+
+fetching path `/nix/store/jmwpkfbpgzj92y0cggrzqg9nqhalbhab-libXpm-3.5.10'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1ia4x95zar0i9akx7ccnqnwbyj10bjhj8nic3vkbafnm7ld0hnhx.nar.bz2’ to ‘/nix/store/jmwpkfbpgzj92y0cggrzqg9nqhalbhab-libXpm-3.5.10’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 59371  100 59371    0     0  47184      0  0:00:01  0:00:01 --:--:-- 47649
+
+fetching path `/nix/store/0jmddg3l4a4cy6lgzy2si90zn9y7ip10-xlibs-wrapper'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/017633qxx16zi3mvyiy8yiw96jdwgvyrmyibjn8w8yn9xk2mpgff.nar.bz2’ to ‘/nix/store/0jmddg3l4a4cy6lgzy2si90zn9y7ip10-xlibs-wrapper’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   572  100   572    0     0    971      0 --:--:-- --:--:-- --:--:--   996
+
+fetching path `/nix/store/9m5npwc6k7c6gwh1hy8chi0naqzv1lv7-guile-2.0.9'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0padnmih5gr197j0yl805cvfr7iy4gv546dq9nrj9lsw8y8sn958.nar.bz2’ to ‘/nix/store/9m5npwc6k7c6gwh1hy8chi0naqzv1lv7-guile-2.0.9’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 3349k  100 3349k    0     0   181k      0  0:00:18  0:00:18 --:--:--  165k
+
+fetching path `/nix/store/59w80chnsc8nxyfgxqm3z156z2cvf9nf-pango-1.30.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1siiix4dlx19mg8pfa5hyxk7kl9hvhkkdv5gygj25kxi8xw6ivwi.nar.bz2’ to ‘/nix/store/59w80chnsc8nxyfgxqm3z156z2cvf9nf-pango-1.30.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  375k  100  375k    0     0   108k      0  0:00:03  0:00:03 --:--:--  108k
+
+fetching path `/nix/store/fqag7wqgswq3nwhlmk5sa0n48v86fidl-gnutls-3.1.10'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1vlzbzf5q7lq25cnxxcj6z9h5im8k4nykq9dda20057flc3l7dh7.nar.bz2’ to ‘/nix/store/fqag7wqgswq3nwhlmk5sa0n48v86fidl-gnutls-3.1.10’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2841k  100 2841k    0     0   167k      0  0:00:16  0:00:16 --:--:--  216k
+
+fetching path `/nix/store/5112scs30hizb72wdsasndy8gd394cz3-xineramaproto-1.2.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0ns8fr5ik02cw1x397vp47svlns28hr6wn93m779dxwh0lhdy989.nar.bz2’ to ‘/nix/store/5112scs30hizb72wdsasndy8gd394cz3-xineramaproto-1.2.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2158  100  2158    0     0   3615      0 --:--:-- --:--:-- --:--:--  3670
+
+fetching path `/nix/store/c7q30gk6md2gmqh7p3k7rh5lgz3jfngz-fixesproto-5.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/00jclv2md1rkj6f8wjzg0x86965kan45vxmn0aa06dhpz40hqc9r.nar.bz2’ to ‘/nix/store/c7q30gk6md2gmqh7p3k7rh5lgz3jfngz-fixesproto-5.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 10108  100 10108    0     0  16971      0 --:--:-- --:--:-- --:--:-- 17337
+
+fetching path `/nix/store/a8iv7zabfpa0nfkz4l0w56rks8f5p375-libXinerama-1.1.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0zf4bpi4my9jx5c7xrwcm1l1lgxdl8waya0cdxrvc5082m0snqkn.nar.bz2’ to ‘/nix/store/a8iv7zabfpa0nfkz4l0w56rks8f5p375-libXinerama-1.1.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  9980  100  9980    0     0  16444      0 --:--:-- --:--:-- --:--:-- 16773
+
+fetching path `/nix/store/7h3pc42vf8bamf069ggd3j6jbpp3mxh5-libXfixes-5.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1b3sr1790hjd82s7srb7snpwcngfqjhc7ymsj79d6vnp12iw9vqf.nar.bz2’ to ‘/nix/store/7h3pc42vf8bamf069ggd3j6jbpp3mxh5-libXfixes-5.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 14149  100 14149    0     0  16404      0 --:--:-- --:--:-- --:--:-- 16548
+
+fetching path `/nix/store/m873m4mbk271z4axdn493bngxkdp8jq8-compositeproto-0.4.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1yqm77si2pb8jd767zjfj97xmpa1crcx0qa8nflp1ha4hrcgy6db.nar.bz2’ to ‘/nix/store/m873m4mbk271z4axdn493bngxkdp8jq8-compositeproto-0.4.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7087  100  7087    0     0  11979      0 --:--:-- --:--:-- --:--:-- 12197
+
+fetching path `/nix/store/craak8dr1dk2vvdkxnqv7jpid48il63m-inputproto-2.2'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1b7bd40aq56jv5gwc357qn9lyv45y0ld2wy8h47hs5byml9b4chd.nar.bz2’ to ‘/nix/store/craak8dr1dk2vvdkxnqv7jpid48il63m-inputproto-2.2’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 13978  100 13978    0     0  16250      0 --:--:-- --:--:-- --:--:-- 16483
+
+fetching path `/nix/store/lwq714v4dd19b46m6bqlahy9ndnmaws5-libXcomposite-0.4.3'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0a01km51j3k1girqysg39bg4dagisz0gm58nsij7g503pfc9yqx6.nar.bz2’ to ‘/nix/store/lwq714v4dd19b46m6bqlahy9ndnmaws5-libXcomposite-0.4.3’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 11504  100 11504    0     0  19300      0 --:--:-- --:--:-- --:--:-- 19564
+
+fetching path `/nix/store/m0zapin3i4383sb0y2ijfrhm5m7cca89-libXi-1.6.1'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/04h1039iz1vxhnhmchhq3pd1rnclrzsgvbz2srcfpkj5chnrrfy6.nar.bz2’ to ‘/nix/store/m0zapin3i4383sb0y2ijfrhm5m7cca89-libXi-1.6.1’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  146k  100  146k    0     0  83773      0  0:00:01  0:00:01 --:--:-- 84159
+
+fetching path `/nix/store/r7nbnxilqn16530h76nylzj5y4fg3f51-randrproto-1.4.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/0s2aa4m2frkrasf9xfvqji43gvr4z8b6j6m6jiqhi5c57kiwgyf5.nar.bz2’ to ‘/nix/store/r7nbnxilqn16530h76nylzj5y4fg3f51-randrproto-1.4.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 26276  100 26276    0     0  29998      0 --:--:-- --:--:-- --:--:-- 30376
+
+fetching path `/nix/store/nlzimzysnjibqhxiykz6j99vv3ja2mj0-libXrandr-1.4.0'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/02i755388pll7y2dp1l3si1p2n69i7vqmsaa7xg4gg714clvqwnj.nar.bz2’ to ‘/nix/store/nlzimzysnjibqhxiykz6j99vv3ja2mj0-libXrandr-1.4.0’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 27170  100 27170    0     0  31421      0 --:--:-- --:--:-- --:--:-- 31703
+
+fetching path `/nix/store/gidxbrb58lm5ikfvcqwx7ja2fqjjmifm-gtk+-2.24.14'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/1zl3mhk0kmdvvncg13k26xslvifs4ylk6znfb4ynphmm2w20xxdw.nar.bz2’ to ‘/nix/store/gidxbrb58lm5ikfvcqwx7ja2fqjjmifm-gtk+-2.24.14’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2805k  100 2805k    0     0   131k      0  0:00:21  0:00:21 --:--:--  168k
+
+fetching path `/nix/store/jrw95x1nly7xghf5d7kx1xsvl9116b6c-emacs-24.3'...
+Use of uninitialized value $s in split at /usr/libexec/nix/substituters/download-from-binary-cache.pl line 195.
+
+*** Downloading ‘http://nixos.org/binary-cache/nar/07xb0sm0gcjmaj999jjrhp7ky8s9kpazij900kkz026nijrd97nz.nar.bz2’ to ‘/nix/store/jrw95x1nly7xghf5d7kx1xsvl9116b6c-emacs-24.3’...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 38.8M  100 38.8M    0     0   203k      0  0:03:15  0:03:15 --:--:--  371k
+
+building path(s) `/nix/store/k9q0w0yrzj61c6qvj50qyjjd2k2f130m-user-environment'
+created 4 symlinks in user environment
+sudo env  nix-env -i emacs-24.3  69.54s user 12.22s system 7% cpu 17:10.17 total
