@@ -12,6 +12,15 @@ ubuntuserverにログインして
 
 blue@ML110G7:~# sudo -i
 root@ML110G7:~# tmux　　　　　　→サーバーとの接続が切れたら# tmux attach
+
+//最適なオプションを判断する？
+root@ML110G7:~# apt-get install g++
+root@ML110G7:~# cc -march=native -E -v - </dev/null 2>&1 | grep cc1
+ /usr/lib/gcc/x86_64-linux-gnu/4.6/cc1 -E -quiet -v -imultilib . -imultiarch x86_64-linux-gnu - -march=corei7-avx -mcx16 -msahf -mno-movbe -mno-aes -mpclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-tbm -mno-avx -msse4.2 -msse4.1 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=2048 -mtune=corei7-avx -fstack-protector
+
+//x86_64-linux-gnu -以下を後述する /etc/portage/make.conf　のCFLAGS=　に追記する
+-march=corei7-avx -mcx16 -msahf -mno-movbe -mno-aes -mpclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-tbm -mno-avx -msse4.2 -msse4.1 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=2048 -mtune=corei7-avx -fstack-protector
+
 root@ML110G7:~# parted /dev/sda
 GNU Parted 2.3
 /dev/sda を使用
@@ -66,8 +75,7 @@ root@ML110G7:/mnt/gentoo# nano -w /mnt/gentoo/etc/portage/make.conf
 # Please consult /usr/share/portage/config/make.conf.example for a more
 # detailed example.
 
-CFLAGS="-O3 -pipe -march=core2 -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -mmmx -fomit-frame-pointer"
-
+CFLAGS="-O3 -pipe -march=corei7-avx -mcx16 -msahf -mno-movbe -mno-aes -mpclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-tbm -mno-avx -msse4.2 -msse4.1 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=2048 -mtune=corei7-avx -fstack-protector"
 CXXFLAGS="${CFLAGS}"
 
 # WARNING: Changing your CHOST is not something that should be done lightly.
@@ -79,7 +87,7 @@ CHOST="x86_64-pc-linux-gnu"
 # profile used for building.
 
 
-USE="bindist mmx sse sse2 ssse3 zsh-completion ramfs curl acpi cpio mkinitcpio busybox mount hardened hddtemp zlib lzo ipv6 -examples"
+USE="bindist mmx sse sse2 ssse3 zsh-completion ramfs curl acpi cpio mkinitcpio btrfs-progs mount hddtemp zlib lzo ipv6 -examples"
 #hardened ramfs mkinitcpio busybox cpio mount hddtemp zlib lzo curl acpi
 
 MAKEOPTS="-j3"
