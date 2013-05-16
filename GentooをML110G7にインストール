@@ -16,8 +16,7 @@ root@ML110G7:~# tmux　　　　　　→サーバーとの接続が切れたら
 //最適なオプションを判断する？
 root@ML110G7:~# apt-get install g++
 root@ML110G7:~# cc -march=native -E -v - </dev/null 2>&1 | grep cc1
- /usr/lib/gcc/x86_64-linux-gnu/4.6/cc1 -E -quiet -v -imultilib . -imultiarch x86_64-linux-gnu - -march=corei7-avx -mcx16 -msahf -mno-movbe -mno-aes -mpclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-tbm -mno-avx -msse4.2 -msse4.1 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=2048 -mtune=corei7-avx -fstack-protector
-
+ /usr/libexec/gcc/x86_64-pc-linux-gnu/4.6.3/cc1 -E -quiet -v - -march=corei7-avx -mcx16 -msahf -mno-movbe -mno-aes -mpclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-tbm -mno-avx -msse4.2 -msse4.1 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=2048 -mtune=corei7-avx
 //x86_64-linux-gnu -以下を後述する /etc/portage/make.conf　のCFLAGS=　に追記する
 -march=corei7-avx -mcx16 -msahf -mno-movbe -mno-aes -mpclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-tbm -mno-avx -msse4.2 -msse4.1 --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=2048 -mtune=corei7-avx -fstack-protector
 
