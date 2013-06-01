@@ -1,16 +1,17 @@
-curl https://raw.github.com/bleuscr/memo/master/Gentoo%E3%82%92ML110G7%E3%81%AB%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB -o .bash_history 
+curl https://raw.github.com/bleuscr/memo/master/Gentoo%E3%82%92ML110G7%E3%81%AB%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB -o .bash_history
+tmux
 date
 hwclock
 mkfs.ext2 /dev/sda1
 mkfs.ext4 -j /dev/sda2
 mkfs.btrfs /dev/sda3
-rm -r /mnt/gentoo/
+rm -r /mnt/gentoo/ /mnt/home/
 mkdir /mnt/gentoo
 mount -t ext4 /dev/sda2 /mnt/gentoo/
 mkdir /mnt/gentoo/boot
 mount -t ext2 /dev/sda1 /mnt/gentoo/boot
-mkdir -p /mnt/gentoo/home
-mount -t btrfs /dev/sda3 /mnt/gentoo/home
+mkdir -p /mnt/home
+mount -t btrfs /dev/sda3 /mnt/home
 cd /mnt/gentoo/
 wget http://gentoo.channelx.biz/releases/amd64/current-stage3/stage3-amd64-20130530.tar.bz2
 tar xvjpf stage3-*.tar.bz2
@@ -47,16 +48,13 @@ ls -l /usr/src/linux
 cd /usr/src/linux
 make localyesconfig
 make menuconfig
-time make && make
+time make && make modules_install
 cp arch/x86_64/boot/bzImage /boot/kernel
 ls /boot/kernel* /boot/initramfs*
 nano /etc/fstab
 nano -w /etc/conf.d/hostname
 ln -s /etc/init.d/net.lo /etc/init.d/net.enp2s0
 rc-update add net.enp2s0 default
-ufw enable
-ufw allow ssh
-ufw allow http
 nano -w /etc/ssh/sshd_config
 rc-update add sshd default
 rc-update add dhcpcd default
