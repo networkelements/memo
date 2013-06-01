@@ -5,13 +5,13 @@ hwclock
 mkfs.ext2 /dev/sda1
 mkfs.ext4 -j /dev/sda2
 mkfs.btrfs /dev/sda3
-rm -r /mnt/gentoo/ /mnt/home/
+rm -r /mnt/gentoo/
 mkdir /mnt/gentoo
 mount -t ext4 /dev/sda2 /mnt/gentoo/
 mkdir /mnt/gentoo/boot
 mount -t ext2 /dev/sda1 /mnt/gentoo/boot
-mkdir -p /mnt/home
-mount -t btrfs /dev/sda3 /mnt/home
+mkdir -p /mnt/gentoo/home/
+mount -t btrfs /dev/sda3 /mnt/gentoo/home/
 cd /mnt/gentoo/
 wget http://gentoo.channelx.biz/releases/amd64/current-stage3/stage3-amd64-20130530.tar.bz2
 tar xvjpf stage3-*.tar.bz2
