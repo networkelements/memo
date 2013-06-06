@@ -24,53 +24,6 @@ mount --rbind /dev /mnt/gentoo/dev
 mount --rbind /sys /mnt/gentoo/sys
 cp -L /etc/resolv.conf /mnt/gentoo/etc
 chroot /mnt/gentoo /bin/bash
-env-update && source /etc/profile
-export PS1="(chroot) $PS1"
-time emerge --sync
-eselect profile list
-eselect profile set 1
-eselect profile list
-time emerge distcc livecd-tools linux-headers linux-firmware gentoo-sources iptables pciutils syslog-ng fcron dhcpcd openssh vim mdadm lvm2 cryptsetup sudo zsh grub eix portage-utils samba man-pages-ja groff ntp ufw --autounmask-write
-dispatch-conf
-time emerge -tav distcc livecd-tools linux-headers linux-firmware gentoo-sources iptables pciutils syslog-ng fcron dhcpcd openssh vim mdadm lvm2 cryptsetup sudo zsh grub eix portage-utils samba man-pages-ja groff ntp ufw
-nano -w /etc/locale.gen
-nano /etc/env.d/02locale
-locale-gen
-cp /usr/share/zoneinfo/Japan /etc/localtime
-echo "Asia/Tokyo" > /etc/timezone
-cat /etc/timezone
-date
-ls -l /usr/src/linux
-cd /usr/src/linux
-make localyesconfig
-make menuconfig
-time make && make modules_install
-cp arch/x86_64/boot/bzImage /boot/kernel
-ls /boot/kernel* /boot/initramfs*
-nano /etc/fstab
-netstat -rn
-net-setup enp2s0
-ifconfig
-nano -w /etc/conf.d/hostname
-ln -s /etc/init.d/net.lo /etc/init.d/net.enp2s0
-rc-update add net.enp2s0 default
-nano -w /etc/ssh/sshd_config
-rc-update add sshd default
-rc-update add dhcpcd default
-rc-update add syslog-ng default
-rc-update add fcron default
-nano -w /etc/rc.conf
-nano -w /etc/conf.d/keymaps
-nano -w /etc/conf.d/hwclock
-hwclock --debug
-ntpdate ntp.nict.jp
-hwclock --systohc
-passwd
-visudo
-env-update && source /etc/profile
-ls /boot/kernel* /boot/initramfs*
-nano /boot/grub/grub.conf
-exit
 umount -l /mnt/gentoo{/dev{/shm,/pts},/sys,/usr,/home,/opt,/tmp,/var,/boot,/proc,/}
 exit
 poweroff
